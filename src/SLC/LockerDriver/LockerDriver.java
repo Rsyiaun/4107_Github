@@ -19,9 +19,7 @@ public class LockerDriver extends HWHandler {
     // processMsg
     protected void processMsg(Msg msg) {
         switch (msg.getType()) {
-            case LK_BarcodeRead:
-                slc.send(new Msg(id, mbox, Msg.Type.BR_BarcodeRead, msg.getDetails()));
-                break;
+
 
             case LK_GoActive:
                 handleGoActive();
