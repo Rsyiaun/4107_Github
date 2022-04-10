@@ -42,8 +42,8 @@ public class LockerEmulator extends LockerDriver {
         lockerEmulatorController = (LockerEmulatorController) loader.getController();
         lockerEmulatorController.initialize(id, slcStarter, log, this);
         myStage.initStyle(StageStyle.DECORATED);
-        myStage.setScene(new Scene(root, 350, 470));
-        myStage.setTitle("Barcode Reader");
+        myStage.setScene(new Scene(root, 700, 1000));
+        myStage.setTitle("Locker");
         myStage.setResizable(false);
         myStage.setOnCloseRequest((WindowEvent event) -> {
             slcStarter.stopApp();
