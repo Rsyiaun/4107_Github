@@ -8,6 +8,7 @@ import AppKickstarter.misc.*;
 // HWHandler
 public abstract class HWHandler extends AppThread {
     protected MBox slc = null;
+    protected  MBox touchDisplayMBox=null;
 
     //------------------------------------------------------------
     // HWHandler

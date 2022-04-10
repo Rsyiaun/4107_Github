@@ -97,5 +97,10 @@ public class Msg {
         /** Barcode Reader Go Activate */	LK_GoActive,
         /** Barcode Reader Go Standby */	LK_GoStandby,
         /** Card inserted */			LK_BarcodeRead,
+        /**Button Clicked */        TD_ButtonClicked,
+        /**Pick up code*/   PickupCode,
+        /**PicK Up code message*/ PickupCodeMsg,
+        /**customer input pick up code*/  CodeToVerify,
+        /**pickup code verify result*/ CodeVerifyResult,
     } // Type
 } // Msg

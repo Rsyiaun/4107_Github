@@ -5,12 +5,27 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="570.0" prefWidth="680.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="SLC.TouchDisplayHandler.Emulator.TouchDisplayEmulatorController">
     <children>
         <AnchorPane prefHeight="480.0" AnchorPane.leftAnchor="20" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20">
             <children>
                 <Rectangle arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="480.0" onMouseClicked="#td_mouseClick" stroke="BLACK" strokeType="OUTSIDE" width="640" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0" />
+                <Button id="Store" fx:id="Store" layoutX="168.0" layoutY="216.0" mnemonicParsing="false" onAction="#td_StoreBtnClick" prefHeight="50.0" prefWidth="136.0" text="Store Parcel">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                </Button>
+                <Button id="Pick" fx:id="Pick" layoutX="171.0" layoutY="280.0" mnemonicParsing="false" onAction="#td_PickBtnClick" prefHeight="50.0" prefWidth="129.0" text="Pick Parcel">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                </Button>
+                <Label fx:id="GeneratedCode" layoutX="42.0" layoutY="48.0" prefHeight="92.0" prefWidth="375.0" />
+                <Label fx:id="WelcomeLabel" layoutX="147.0" layoutY="14.0" prefHeight="41.0" prefWidth="177.0" text="welcome to smart locker!" />
+                <Label fx:id="DoorOpenRemind" layoutX="51.0" layoutY="147.0" prefHeight="41.0" prefWidth="323.0" />
+                <Label fx:id="CodeGenerateMsg" layoutX="40.0" layoutY="181.0" prefHeight="15.0" prefWidth="369.0" />
             </children>
         </AnchorPane>
         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#d7d7d7" height="50.0" stroke="TRANSPARENT" strokeType="INSIDE" width="680.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
