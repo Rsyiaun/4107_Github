@@ -94,8 +94,8 @@ public class Msg {
         /** Barcode Reader Go Activate */	BR_GoActive,
         /** Barcode Reader Go Standby */	BR_GoStandby,
         /** Card inserted */			BR_BarcodeRead,
-        /** Barcode Reader Go Activate */	LK_GoActive,
-        /** Barcode Reader Go Standby */	LK_GoStandby,
-        /** Card inserted */			LK_BarcodeRead,
+        /** Locker  Go Activate */	LK_GoActive,
+        /** Locker  Go Standby */	LK_GoStandby,
+
     } // Type
 } // Msg

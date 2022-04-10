@@ -75,21 +75,7 @@ public class BarcodeReaderEmulatorController {
 	Button btn = (Button) actionEvent.getSource();
 
 	switch (btn.getText()) {
-	    case "Barcode 1":
-	        barcodeNumField.setText(appKickstarter.getProperty("BarcodeReader.Barcode1"));
-	        break;
 
-	    case "Barcode 2":
-		barcodeNumField.setText(appKickstarter.getProperty("BarcodeReader.Barcode2"));
-		break;
-
-	    case "Barcode 3":
-		barcodeNumField.setText(appKickstarter.getProperty("BarcodeReader.Barcode3"));
-		break;
-
-	    case "Reset":
-		barcodeNumField.setText("");
-		break;
 
 	    case "Send Barcode":
                 barcodeReaderMBox.send(new Msg(id, barcodeReaderMBox, Msg.Type.BR_BarcodeRead, barcodeNumField.getText()));

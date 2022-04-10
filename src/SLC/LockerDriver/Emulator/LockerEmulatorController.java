@@ -121,6 +121,11 @@ public class LockerEmulatorController {
         barcodeReaderStatusField.setText(status);
     } // updateBarcodeReaderStatus
 
+    //------------------------------------------------------------
+    // LockerOpen-ChangeButtonColor
+    public void changeLockerColor(){
+
+    }
 
     //------------------------------------------------------------
     // appendTextArea
