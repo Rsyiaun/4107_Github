@@ -74,8 +74,6 @@ public class LockerEmulatorController {
 
     } // initialize
 
-    //------------------------------------------------------------
-    // readeFile From config file
 
 
     //------------------------------------------------------------
@@ -108,7 +106,7 @@ public class LockerEmulatorController {
         int id  = Integer.parseInt(btn.getText());
         Lockers lk;
          lk = aL.get(id-1);
-         appendTextArea("Locker: " + lk.id + "Access Code: "+lk.accessCode);
+         appendTextArea("Locker: " + lk.id + "Access Code: "+lk.accessCode + "Status: " + lk.status + "Storage Time: " + lk.storageTime);
     }
 
     //------------------------------------------------------------
@@ -154,21 +152,32 @@ public class LockerEmulatorController {
     public static class Lockers {
         String accessCode;
         String status;
+        String storageTime;
         int id;
 
-        Lockers(String accessCode, String status, int id){
+        Lockers(String accessCode, String status, String storageTime, int id){
             this.accessCode = accessCode;
             this.id = id;
             this.status = status;
+            this.storageTime = storageTime;
         }
     }
     //------------------------------------------------------------
     // Generate a arraylist of locker var
-    public static Object getLockerData(String [] accessCode, String [] status, int [] id){
+    public  Object getLockerData(){
+        String  accessCode ;
+        String  storageTime;
+        String  status = null;
+        int  id;
         final int LockerSize = 40;
         ArrayList <Lockers> aL = new ArrayList<>();
-        for(int i = 0 ; i < LockerSize; i++){
-            Lockers lk = new Lockers(accessCode[i],status[i] , id[i] );
+
+        for(int i = 1 ; i <= LockerSize; i++){
+            String lockerValue = "Lockers.Locker" + i;
+            String lockerDetail = appKickstarter.getProperty(lockerValue);
+            String [] detailSplit = lockerDetail.split("-");
+            accessCode = detailSplit[0]; status = detailSplit[1]; storageTime = detailSplit[2];
+            Lockers lk = new Lockers(accessCode, status,  storageTime, i-1 );
             aL.add(lk);
         }
         return aL;
