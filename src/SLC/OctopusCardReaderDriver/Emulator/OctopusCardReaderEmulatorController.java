@@ -24,6 +24,7 @@ public class OctopusCardReaderEmulatorController {
     private String standbyResp;
     private String pollResp;
     public TextField octopusCardNumField;
+    public TextField octopusCardCostField;
     public TextField octopusCardReaderStatusField;
     public TextArea octopusCardReaderTextArea;
     public ChoiceBox standbyRespCBox;
@@ -75,28 +76,36 @@ public class OctopusCardReaderEmulatorController {
         switch (btn.getText()) {
             case "OctopusCard 1":
                 octopusCardNumField.setText(appKickstarter.getProperty("OctopusCardReader.OctopusCard1"));
+                octopusCardCostField.setText(appKickstarter.getProperty("OctopusCardReader.OctopusCard1.cost1"));
                 break;
 
             case "OctopusCard 2":
                 octopusCardNumField.setText(appKickstarter.getProperty("OctopusCardReader.OctopusCard2"));
+                octopusCardCostField.setText(appKickstarter.getProperty("OctopusCardReader.OctopusCard2.cost2"));
                 break;
 
             case "OctopusCard 3":
                 octopusCardNumField.setText(appKickstarter.getProperty("OctopusCardReader.OctopusCard3"));
+                octopusCardCostField.setText(appKickstarter.getProperty("OctopusCardReader.OctopusCard3.cost3"));
                 break;
 
             case "Reset":
                 octopusCardNumField.setText("");
+                octopusCardCostField.setText("");
                 break;
 
             case "Send OctopusCard":
                 octopusCardReaderMBox.send(new Msg(id, octopusCardReaderMBox, Msg.Type.OC_OctopusCardRead, octopusCardNumField.getText()));
                 octopusCardReaderTextArea.appendText("Sending octopusCard " + octopusCardNumField.getText()+"\n");
+                octopusCardReaderMBox.send(new Msg(id, octopusCardReaderMBox, Msg.Type.OC_OctopusCardRead, octopusCardCostField.getText()));
+                octopusCardReaderTextArea.appendText("Sending octopusCard Cost" + octopusCardCostField.getText()+"\n");
                 break;
 
             case "Activate/Standby":
                 octopusCardReaderMBox.send(new Msg(id, octopusCardReaderMBox, Msg.Type.BR_GoActive, octopusCardNumField.getText()));
+                octopusCardReaderMBox.send(new Msg(id, octopusCardReaderMBox, Msg.Type.BR_GoActive, octopusCardCostField.getText()));
                 octopusCardReaderTextArea.appendText("Removing card\n");
+
                 break;
 
             default:
