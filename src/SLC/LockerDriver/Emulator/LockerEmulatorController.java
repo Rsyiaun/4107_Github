@@ -69,8 +69,8 @@ public class LockerEmulatorController {
         this.standbyResp = standbyRespCBox.getValue().toString();
         this.pollResp = pollRespCBox.getValue().toString();
         this.goStandby();
-//
-//        this.aL = (ArrayList<Lockers>) getLockerData(accessCode,SLid);
+ getLockerData();
+
 
     } // initialize
 
@@ -164,22 +164,22 @@ public class LockerEmulatorController {
     }
     //------------------------------------------------------------
     // Generate a arraylist of locker var
-    public  Object getLockerData(){
+    public ArrayList<Lockers> getLockerData(){
         String  accessCode ;
         String  storageTime;
-        String  status = null;
+        String  status ;
         int  id;
         final int LockerSize = 40;
         ArrayList <Lockers> aL = new ArrayList<>();
 
-        for(int i = 1 ; i <= LockerSize; i++){
-            String lockerValue = "Lockers.Locker" + i;
-            String lockerDetail = appKickstarter.getProperty(lockerValue);
-            String [] detailSplit = lockerDetail.split("-");
-            accessCode = detailSplit[0]; status = detailSplit[1]; storageTime = detailSplit[2];
-            Lockers lk = new Lockers(accessCode, status,  storageTime, i-1 );
-            aL.add(lk);
-        }
+//        for(int i = 1 ; i <= LockerSize; i++){
+//            String lockerValue = "Lockers.Locker" + i;
+//            String lockerDetail = appKickstarter.getProperty(lockerValue);
+//            String [] detailSplit = lockerDetail.split("-");
+//            accessCode = detailSplit[0]; status = detailSplit[1]; storageTime = detailSplit[2]; id = i-1;
+//            Lockers lk = new Lockers(accessCode, status,  storageTime, id );
+//            aL.add(lk);
+//        }
         return aL;
     }
 
