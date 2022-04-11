@@ -5,6 +5,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="570.0" prefWidth="680.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="SLC.TouchDisplayHandler.Emulator.TouchDisplayEmulatorController">
     <children>
@@ -16,10 +17,21 @@
                 <Rectangle arcHeight="5.0" arcWidth="5.0" fill="white" height="70.0" stroke="BLACK" strokeType="OUTSIDE" width="300.0" AnchorPane.bottomAnchor="70" AnchorPane.rightAnchor="0" />
                 <Rectangle arcHeight="5.0" arcWidth="5.0" fill="white" height="70.0" stroke="BLACK" strokeType="OUTSIDE" width="300.0" AnchorPane.bottomAnchor="140" AnchorPane.leftAnchor="0" />
                 <Rectangle arcHeight="5.0" arcWidth="5.0" fill="white" height="70.0" stroke="BLACK" strokeType="OUTSIDE" width="300.0" AnchorPane.bottomAnchor="140" AnchorPane.rightAnchor="0" />
-                <Button fx:id="CodeInputOK" layoutX="235.0" layoutY="144.0" mnemonicParsing="false" onAction="#td_CodeInputOK" text="OK" />
-                <Label layoutX="194.0" layoutY="64.0" text="Please input Pick up code:" />
-                <TextField fx:id="InputPickupCode" layoutX="188.0" layoutY="94.0" />
-                <Label fx:id="CodeVerifyResult" layoutX="118.0" layoutY="201.0" prefHeight="50.0" prefWidth="239.0" />
+                <Label layoutX="152.0" layoutY="28.0" text="Please input Pick up code:">
+               <font>
+                  <Font size="24.0" />
+               </font></Label>
+                <TextField fx:id="InputPickupCode" layoutX="192.0" layoutY="70.0" prefHeight="63.0" prefWidth="203.0" />
+                <Label fx:id="CodeVerifyResult" layoutX="44.0" layoutY="200.0" prefHeight="50.0" prefWidth="463.0">
+               <font>
+                  <Font size="18.0" />
+               </font></Label>
+            <Label layoutX="222.0" layoutY="149.0" prefHeight="32.0" prefWidth="143.0" text="Input Finish">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1f93ff00" height="50.0" layoutX="214.0" layoutY="140.0" onMouseClicked="#td_CodeInputOK" stroke="BLACK" strokeType="INSIDE" width="160.0" />
             </children>
         </AnchorPane>
         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#d7d7d7" height="50.0" stroke="TRANSPARENT" strokeType="INSIDE" width="680.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />

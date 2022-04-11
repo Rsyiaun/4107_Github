@@ -96,6 +96,11 @@ public class Msg {
         /** Card inserted */			BR_BarcodeRead,
         /** Locker  Go Activate */	LK_GoActive,
         /** Locker  Go Standby */	LK_GoStandby,
+        /**Button Clicked */        TD_ButtonClicked,
+        /**Pick up code*/   PickupCode,
+        /**PicK Up code messsage*/ PickupCodeMsg,
+        /**customer input pick up code*/  CodeToVerify,
+        /**pickup code verify result*/ CodeVerifyResult,
 
     } // Type
 } // Msg
