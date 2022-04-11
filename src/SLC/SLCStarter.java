@@ -7,6 +7,7 @@ import AppKickstarter.timer.Timer;
 import SLC.LockerDriver.LockerDriver;
 import SLC.SLC.SLC;
 import SLC.BarcodeReaderDriver.BarcodeReaderDriver;
+import SLC.OctopusCardReaderDriver.OctopusCardReaderDriver;
 import SLC.TouchDisplayHandler.TouchDisplayHandler;
 
 import javafx.application.Platform;
@@ -18,6 +19,7 @@ public class SLCStarter extends AppKickstarter {
     protected Timer timer;
     protected SLC slc;
     protected BarcodeReaderDriver barcodeReaderDriver;
+    protected OctopusCardReaderDriver octopusReaderDriver;
     protected TouchDisplayHandler touchDisplayHandler;
 	protected LockerDriver lockerDriver;
 
@@ -56,6 +58,7 @@ public class SLCStarter extends AppKickstarter {
 	    timer = new Timer("timer", this);
 	    slc = new SLC("SLC", this);
 	    barcodeReaderDriver = new BarcodeReaderDriver("BarcodeReaderDriver", this);
+	    octopusReaderDriver = new OctopusCardReaderDriver("OctopusCardReaderDriver",this);
 	    touchDisplayHandler = new TouchDisplayHandler("TouchDisplayHandler", this);
 		lockerDriver = new LockerDriver("LockerDriver", this);
 	} catch (Exception e) {
@@ -68,6 +71,7 @@ public class SLCStarter extends AppKickstarter {
 	new Thread(timer).start();
 	new Thread(slc).start();
 	new Thread(barcodeReaderDriver).start();
+	new Thread(octopusReaderDriver).start();
 	new Thread(touchDisplayHandler).start();
 	new Thread(lockerDriver).start();
     } // startHandlers
@@ -82,6 +86,7 @@ public class SLCStarter extends AppKickstarter {
 	log.info(id + ": Application Stopping...");
 	slc.getMBox().send(new Msg(id, null, Msg.Type.Terminate, "Terminate now!"));
 	barcodeReaderDriver.getMBox().send(new Msg(id, null, Msg.Type.Terminate, "Terminate now!"));
+	octopusReaderDriver.getMBox().send(new Msg(id, null, Msg.Type.Terminate, "Terminate now!"));
 	touchDisplayHandler.getMBox().send(new Msg(id, null, Msg.Type.Terminate, "Terminate now!"));
 	lockerDriver.getMBox().send(new Msg(id, null, Msg.Type.Terminate, "Terminate now!"));
 	timer.getMBox().send(new Msg(id, null, Msg.Type.Terminate, "Terminate now!"));
