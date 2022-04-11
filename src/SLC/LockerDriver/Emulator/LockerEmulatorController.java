@@ -4,6 +4,8 @@ import AppKickstarter.AppKickstarter;
 import AppKickstarter.misc.MBox;
 import AppKickstarter.misc.Msg;
 
+import java.io.IOException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.logging.Logger;
 
@@ -35,10 +37,9 @@ public class LockerEmulatorController {
     public ChoiceBox activationRespCBox;
     public ChoiceBox pollRespCBox;
 
-
     //------------------------------------------------------------
     // initialize
-    public void initialize(String id, AppKickstarter appKickstarter, Logger log, LockerEmulator lockerEmulator) {
+    public void initialize(String id, AppKickstarter appKickstarter, Logger log, LockerEmulator lockerEmulator) throws IOException {
         this.id = id;
         this.appKickstarter = appKickstarter;
         this.log = log;
@@ -69,12 +70,38 @@ public class LockerEmulatorController {
         this.standbyResp = standbyRespCBox.getValue().toString();
         this.pollResp = pollRespCBox.getValue().toString();
         this.goStandby();
- getLockerData();
-
+        this.aL=getLockerData();
+        new Thread(() -> {
+            while (true){
+                int i  = checkStatus();
+                if(i!=0){
+                    LockerEmulator.changeButtonColor(String.valueOf(i));
+                }
+            }
+            // code goes here.
+        }).start();
 
     } // initialize
 
+    //------------------------------------------------------------
+    // check locker status
+    public int checkStatus(){
+        String  status ;
+        final int LockerSize = 10; //Need To be change to 40 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        for(int i = 1 ; i <= LockerSize; i++){
+            String lockerValue = "Lockers.Locker" + i;
+            String lockerDetail = appKickstarter.getProperty(lockerValue);
+            String [] detailSplit = lockerDetail.split("-");
+            status = detailSplit[1];
+            if (status.equals("open")){
+                return i;
+            }
 
+        }
+
+
+        return 0;
+    }
 
     //------------------------------------------------------------
     // buttonPressed
@@ -101,12 +128,23 @@ public class LockerEmulatorController {
         }
     } // buttonPressed
 
+    //------------------------------------------------------------
+    // Show detail while locker button got clicked
     public void lockerOnClickHandler(ActionEvent actionEvent){
+
         Button btn = (Button) actionEvent.getSource();
         int id  = Integer.parseInt(btn.getText());
         Lockers lk;
-         lk = aL.get(id-1);
-         appendTextArea("Locker: " + lk.id + "Access Code: "+lk.accessCode + "Status: " + lk.status + "Storage Time: " + lk.storageTime);
+        lk = aL.get(id-1);
+        if(!lk.storageTime.equals("null")) {
+            Timestamp storageTime = new Timestamp(Long.valueOf(lk.storageTime));
+            Timestamp currentTime = new Timestamp(System.currentTimeMillis());
+            Long hours = (currentTime.getTime()-storageTime.getTime()  ) / 1000/60/60 ;
+            appendTextArea("Locker: " + id + "  Access Code: "+lk.accessCode + "     Status: " + lk.status + "  Storage Time: " + hours + " hour/s");
+        }else{
+            appendTextArea("Locker: " + id + "  Access Code: "+lk.accessCode + "     Status: " + lk.status + "  Storage Time: " + "null" + " hour/s");
+        }
+
     }
 
     //------------------------------------------------------------
@@ -136,11 +174,6 @@ public class LockerEmulatorController {
         barcodeReaderStatusField.setText(status);
     } // updateBarcodeReaderStatus
 
-    //------------------------------------------------------------
-    // LockerOpen-ChangeButtonColor
-    public void changeLockerColor(){
-
-    }
 
     //------------------------------------------------------------
     // appendTextArea
@@ -169,17 +202,18 @@ public class LockerEmulatorController {
         String  storageTime;
         String  status ;
         int  id;
-        final int LockerSize = 40;
+        final int LockerSize = 10; //Need To be change to 40 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         ArrayList <Lockers> aL = new ArrayList<>();
 
-//        for(int i = 1 ; i <= LockerSize; i++){
-//            String lockerValue = "Lockers.Locker" + i;
-//            String lockerDetail = appKickstarter.getProperty(lockerValue);
-//            String [] detailSplit = lockerDetail.split("-");
-//            accessCode = detailSplit[0]; status = detailSplit[1]; storageTime = detailSplit[2]; id = i-1;
-//            Lockers lk = new Lockers(accessCode, status,  storageTime, id );
-//            aL.add(lk);
-//        }
+        for(int i = 1 ; i <= LockerSize; i++){
+            String lockerValue = "Lockers.Locker" + i;
+            String lockerDetail = appKickstarter.getProperty(lockerValue);
+            String [] detailSplit = lockerDetail.split("-");
+            accessCode = detailSplit[0]; status = detailSplit[1]; storageTime = (detailSplit[2]); id = i-1;
+            Lockers lk = new Lockers(accessCode, status,  storageTime, id );
+            aL.add(lk);
+        }
+
         return aL;
     }
 

@@ -8,6 +8,7 @@ import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
@@ -18,7 +19,7 @@ import javafx.stage.WindowEvent;
 public class LockerEmulator extends LockerDriver {
     private SLCStarter slcStarter;
     private String id;
-    private Stage myStage;
+    private static Stage myStage;
     private LockerEmulatorController lockerEmulatorController;
 
     //------------------------------------------------------------
@@ -50,8 +51,18 @@ public class LockerEmulator extends LockerDriver {
             Platform.exit();
         });
         myStage.show();
-    } // BarcodeReaderEmulator
 
+
+    } // BarcodeReaderEmulator
+    //------------------------------------------------------------
+    // changeButtonColor
+    public static void changeButtonColor(String lockerId){
+        Scene scene = myStage.getScene();
+        if (scene!=null){
+        Button btn = (Button) scene.lookup("#"+lockerId);
+        btn.setStyle("-fx-background-color: red");
+        }
+    }
 
     //------------------------------------------------------------
     // handleGoActive
