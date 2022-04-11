@@ -100,7 +100,11 @@ public class Msg {
         CodeVerifyResult,
         TD_ButtonClicked,
         CodeToVerify,
-        PickupCode
+        PickupCode,
+        Diagnostic,
+        OC_OctopusCardRead,
+        OC_GoActive,
+        OC_GoStandby
 
     } // Type
 } // Msg

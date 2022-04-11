@@ -3,6 +3,8 @@ package SLC.LockerDriver.Emulator;
 import AppKickstarter.AppKickstarter;
 import AppKickstarter.misc.MBox;
 import AppKickstarter.misc.Msg;
+
+import java.util.ArrayList;
 import java.util.logging.Logger;
 
 import javafx.beans.value.ChangeListener;
@@ -25,6 +27,7 @@ public class LockerEmulatorController {
     private String activationResp;
     private String standbyResp;
     private String pollResp;
+    private ArrayList <Lockers> aL = new ArrayList<>();
     public TextField barcodeNumField;
     public TextField barcodeReaderStatusField;
     public TextArea barcodeReaderTextArea;
@@ -66,7 +69,13 @@ public class LockerEmulatorController {
         this.standbyResp = standbyRespCBox.getValue().toString();
         this.pollResp = pollRespCBox.getValue().toString();
         this.goStandby();
+//
+//        this.aL = (ArrayList<Lockers>) getLockerData(accessCode,SLid);
+
     } // initialize
+
+    //------------------------------------------------------------
+    // readeFile From config file
 
 
     //------------------------------------------------------------
@@ -75,6 +84,7 @@ public class LockerEmulatorController {
         Button btn = (Button) actionEvent.getSource();
 
         switch (btn.getText()) {
+
 
 
             case "Reset":
@@ -93,6 +103,13 @@ public class LockerEmulatorController {
         }
     } // buttonPressed
 
+    public void lockerOnClickHandler(ActionEvent actionEvent){
+        Button btn = (Button) actionEvent.getSource();
+        int id  = Integer.parseInt(btn.getText());
+        Lockers lk;
+         lk = aL.get(id-1);
+         appendTextArea("Locker: " + lk.id + "Access Code: "+lk.accessCode);
+    }
 
     //------------------------------------------------------------
     // getters
@@ -132,4 +149,30 @@ public class LockerEmulatorController {
     public void appendTextArea(String status) {
         barcodeReaderTextArea.appendText(status+"\n");
     } // appendTextArea
+    //------------------------------------------------------------
+    // Create object of lockers
+    public static class Lockers {
+        String accessCode;
+        String status;
+        int id;
+
+        Lockers(String accessCode, String status, int id){
+            this.accessCode = accessCode;
+            this.id = id;
+            this.status = status;
+        }
+    }
+    //------------------------------------------------------------
+    // Generate a arraylist of locker var
+    public static Object getLockerData(String [] accessCode, String [] status, int [] id){
+        final int LockerSize = 40;
+        ArrayList <Lockers> aL = new ArrayList<>();
+        for(int i = 0 ; i < LockerSize; i++){
+            Lockers lk = new Lockers(accessCode[i],status[i] , id[i] );
+            aL.add(lk);
+        }
+        return aL;
+    }
+
+
 } // BarcodeReaderEmulatorController

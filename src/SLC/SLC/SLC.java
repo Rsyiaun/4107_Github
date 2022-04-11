@@ -36,6 +36,14 @@ public class SLC extends AppThread {
         touchDisplayMBox = appKickstarter.getThread("TouchDisplayHandler").getMBox();
         touchDisplayMBox1 = appKickstarter.getThread("TouchDisplayHandler").getMBox();
         lockerMBox = appKickstarter.getThread("LockerDriver").getMBox();
+
+
+
+
+
+
+
+
         for (boolean quit = false; !quit; ) {
             Msg msg = mbox.receive();
 
@@ -54,7 +62,9 @@ public class SLC extends AppThread {
                     touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.Poll, ""));
                     lockerMBox.send(new Msg(id, mbox, Msg.Type.Poll, ""));
                     break;
+                case Diagnostic:
 
+                    break;
                 case PollAck:
                     log.info("PollAck: " + msg.getDetails());
                     break;
