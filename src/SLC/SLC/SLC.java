@@ -22,7 +22,7 @@ public class SLC extends AppThread {
     private MBox lockerMBox;
     private CabinetGroup CabinetGroup1;
     private MBox SLSvrMBox;
-
+    private MBox octCardReaderMBox;
     //------------------------------------------------------------
     // SLC
     public SLC(String id, AppKickstarter appKickstarter) throws Exception {
@@ -43,7 +43,7 @@ public class SLC extends AppThread {
         touchDisplayMBox1 = appKickstarter.getThread("TouchDisplayHandler").getMBox();
         lockerMBox = appKickstarter.getThread("LockerDriver").getMBox();
         SLSvrMBox = appKickstarter.getThread("SLSvrHandler").getMBox();
-
+        octCardReaderMBox = appKickstarter.getThread("OctopusCardReaderDriver").getMBox();
 
 
         for (boolean quit = false; !quit; ) {
@@ -64,7 +64,11 @@ public class SLC extends AppThread {
                     touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.Poll, ""));
                     lockerMBox.send(new Msg(id, mbox, Msg.Type.Poll, ""));
                     break;
-                case Diagnostic:
+                case SysDiagnostic:
+                    barcodeReaderMBox.send(new Msg(id, mbox, Msg.Type.SysDiagnostic, ""));
+                    touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.SysDiagnostic, ""));
+                    lockerMBox.send(new Msg(id, mbox, Msg.Type.SysDiagnostic, ""));
+                    octCardReaderMBox.send(new Msg(id, mbox, Msg.Type.SysDiagnostic, ""));
 
                     break;
                 case PollAck:

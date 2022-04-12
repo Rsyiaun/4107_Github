@@ -107,6 +107,9 @@ public class Msg {
         /** OctopusCard  Go Standby */  OC_GoStandby,
         /** OctopusCard  Go Standby */  OC_OctopusCardPaid,
         /**Barcode Verify*/ BarcodeVerify,
+        SysDiagnostic,
+        SysShutdown,
+        SysRestart
 
     } // Type
 } // Msg

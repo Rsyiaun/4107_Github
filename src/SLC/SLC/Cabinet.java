@@ -7,7 +7,7 @@ public class Cabinet {
     private String Barcode;
     private String StoreTime;
 
-    public Cabinet(String ID, Boolean EmptyStatus, String OpenCode, String Barcode, String storeTime) {
+    public Cabinet(String ID, Boolean EmptyStatus, String OpenCode, String Barcode) {
         this.CabinetID = ID;
         this.EmptyStatus = EmptyStatus;
         this.OpenCode = OpenCode;
