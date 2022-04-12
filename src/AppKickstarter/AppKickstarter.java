@@ -2,10 +2,12 @@ package AppKickstarter;
 
 import AppKickstarter.timer.Timer;
 import AppKickstarter.misc.*;
+import SLC.LockerDriver.Emulator.LockerEmulator;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Properties;
 import java.util.logging.Logger;
 import java.util.logging.ConsoleHandler;
@@ -60,6 +62,7 @@ public abstract class AppKickstarter {
 	Thread.currentThread().setName(this.id);
 
 	// read system config from property file
+
 	try {
 	    cfgProps = new Properties();
 	    FileInputStream in = new FileInputStream(cfgFName);
@@ -86,6 +89,8 @@ public abstract class AppKickstarter {
 	logConHd.setLevel(Level.parse(getProperty("AppKickstarter.ConsoleLogLevel", "INFO")));
 	logFileHd.setLevel(Level.parse(getProperty("AppKickstarter.FileLogLevel", "INFO")));
 	appThreads = new Hashtable<String, AppThread>();
+
+
     } // AppKickstarter
 
 
