@@ -61,9 +61,11 @@ public class SLC extends AppThread {
                     Timer.setTimer(id, mbox, pollingTime);
                     log.info("Poll: " + msg.getDetails());
                     barcodeReaderMBox.send(new Msg(id, mbox, Msg.Type.Poll, ""));
+                    octCardReaderMBox.send(new Msg(id, mbox,Msg.Type.Poll,""));
                     touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.Poll, ""));
                     lockerMBox.send(new Msg(id, mbox, Msg.Type.Poll, ""));
                     break;
+
                 case SysDiagnostic:
                     barcodeReaderMBox.send(new Msg(id, mbox, Msg.Type.SysDiagnostic, ""));
                     touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.SysDiagnostic, ""));
@@ -72,7 +74,11 @@ public class SLC extends AppThread {
 
                     break;
                 case PollAck:
-                    log.info("PollAck: " + msg.getDetails());
+                    log.info("PollAck: " + msg.getDetails()+" Broken hardware need to be checked!");
+                    break;
+
+                case PollNak:
+                    log.info("PollNak: " + msg.getDetails());
                     break;
 
                 case Terminate:
