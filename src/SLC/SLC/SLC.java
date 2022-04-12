@@ -11,11 +11,12 @@ import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.Properties;
 import java.util.Random;
-
+import SLC.SLCStarter;
 
 //======================================================================
 // SLC
 public class SLC extends AppThread {
+    private static SLCStarter sLCStarter;
     private int pollingTime;
     private MBox barcodeReaderMBox;
     private MBox touchDisplayMBox;
@@ -76,7 +77,25 @@ public class SLC extends AppThread {
                     octCardReaderMBox.send(new Msg(id, mbox, Msg.Type.SysDiagnostic, ""));
 
                     break;
+                case SysShutdown:
 
+                    barcodeReaderMBox.send(new Msg(id, mbox, Msg.Type.SysShutdown, ""));
+                    touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.SysShutdown, ""));
+                    lockerMBox.send(new Msg(id, mbox, Msg.Type.SysShutdown, ""));
+                    octCardReaderMBox.send(new Msg(id, mbox, Msg.Type.SysShutdown, ""));
+                    quit=true;
+
+                    break;
+                case SysRestart:
+                    barcodeReaderMBox.send(new Msg(id, mbox, Msg.Type.SysShutdown, ""));
+                    touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.SysShutdown, ""));
+                    lockerMBox.send(new Msg(id, mbox, Msg.Type.SysShutdown, ""));
+                    octCardReaderMBox.send(new Msg(id, mbox, Msg.Type.SysShutdown, ""));
+                    log.info("============================================================");
+                    log.info(id + ": Application Restarting...");
+                    sLCStarter = new SLCStarter();
+                    log.info(id + ": Application Restarted.");
+                    break;
                 case PollAck:
                     log.info("PollAck: " + msg.getDetails());
                     break;
@@ -85,10 +104,6 @@ public class SLC extends AppThread {
                     log.info("PollNak: " + msg.getDetails() + " Broken hardware need to be checked!");
                     break;
 
-                case Terminate:
-                    quit = true;
-
-                    break;
 
                 case TD_ButtonClicked:
                     log.info("ButtonCLicked: " + msg.getDetails());
@@ -126,6 +141,9 @@ public class SLC extends AppThread {
 
         // declaring our departure
         appKickstarter.unregThread(this);
+
+
+
         log.info(id + ": terminating...");
     } // run
 

@@ -20,6 +20,10 @@ public class OctopusCardReaderDriver extends HWHandler {
     protected void processMsg(Msg msg) {
         SLSvrMBox = appKickstarter.getThread("SLSvrHandler").getMBox();
         switch (msg.getType()) {
+            case SysShutdown:
+                appKickstarter.unregThread(this);
+                log.info(id + ": terminating...");
+                break;
             case SysDiagnostic:
                 SLSvrMBox.send(new Msg(id, mbox, Msg.Type.SysDiagnostic, "Octopus Card Reader "+ System.lineSeparator() +OctopusCardReaderEmulator.handleDiagnostic()));
 

@@ -5,6 +5,8 @@ import AppKickstarter.AppKickstarter;
 import AppKickstarter.misc.*;
 import SLC.LockerDriver.Emulator.LockerEmulator;
 import SLC.OctopusCardReaderDriver.Emulator.OctopusCardReaderEmulator;
+import SLC.SLC.SLC;
+import SLC.SLCEmulatorStarter;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -64,7 +66,11 @@ public class LockerDriver extends HWHandler {
 
                 break;
 
-            case Terminate:
+            case SysShutdown:
+                appKickstarter.unregThread(this);
+
+                log.info(id + ": terminating...");
+
                 break;
             case LK_GoActive:
                 handleGoActive();
