@@ -3,6 +3,7 @@ package SLC.SLC;
 import AppKickstarter.AppKickstarter;
 import AppKickstarter.misc.*;
 import AppKickstarter.timer.Timer;
+import SLC.LockerDriver.Emulator.LockerEmulatorController;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -115,6 +116,7 @@ public class SLC extends AppThread {
                     break;
 
                 case OC_OctopusCardPaid:
+                    octCardReaderMBox.send(msg);
                     break;
 
                 default:
@@ -171,7 +173,7 @@ public class SLC extends AppThread {
         cfgProps1.load(in);
         in.close();
         String lockerKey = "Lockers.Locker"+lockerID;
-       String refreshProperty = pickupCode+"-"+openStatus+"-"+time;
+        String refreshProperty = pickupCode+"-"+openStatus+"-"+time;
         System.out.println(refreshProperty);
         Object s = cfgProps1.setProperty(lockerKey,refreshProperty);
         FileOutputStream out = new FileOutputStream("etc/Locker.cfg");
@@ -182,17 +184,42 @@ public class SLC extends AppThread {
     } // setProperty
 
     private void processCodeVerify(Msg msg) throws IOException {
-        String MatchCabID = CabinetGroup1.findMatchCabinet(msg.getDetails());
-        if (MatchCabID != null) { //octopus paid status
-            log.info(id + ": pick up code correct! please pick up your parcel at door:" + MatchCabID);
-            //if(msg.getDetails().contains("Paid")){}
-            CabinetGroup1.getCabinet(MatchCabID).setOpenStatus("open");
-            CabinetGroup1.getCabinet(MatchCabID).setOpenCode("null");
-            CabinetGroup1.getCabinet(MatchCabID).setBarcode("null");
-            touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.CodeVerifyResult,  "pick up code correct! please pick up your parcel at door:" + MatchCabID));
+        String MatchCabID = CabinetGroup1.findMatchCabinet(msg.getDetails());//return cabinet id
+
+        if (MatchCabID != null) {
+
+            Cabinet cabinet = CabinetGroup1.getCabinet(MatchCabID);
+            Timestamp storageTime = Timestamp.valueOf(cabinet.getStoreTime());
             Timestamp currentTime = new Timestamp(System.currentTimeMillis());
-            String PickTime = String.valueOf(currentTime.getTime());
-            setLockerProperty(MatchCabID,PickTime,"null","open");
+            Long hours = (currentTime.getTime()-storageTime.getTime()  ) / 1000/60/60 ;
+
+            String OctopusPaid = String.valueOf(octCardReaderMBox.receive());
+
+            log.info(id + ": pick up code correct! Verifying storage hours...");
+            touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.CodeVerifyResult,  "pick up code correct! Verifying storage hours..." + MatchCabID));
+            if (hours>24){
+                if(OctopusPaid.contains("Paid")){
+                    log.info(id + "please pick up your parcel at door:" + MatchCabID);
+                    touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.CodeVerifyResult,  "Successfully Paid! please pick up your parcel at door:" + MatchCabID));
+                    CabinetGroup1.getCabinet(MatchCabID).setOpenStatus("open");
+                    CabinetGroup1.getCabinet(MatchCabID).setOpenCode("null");
+                    CabinetGroup1.getCabinet(MatchCabID).setBarcode("null");
+                    String PickTime = String.valueOf(currentTime.getTime());
+                    setLockerProperty(MatchCabID,PickTime,"null","open");
+                }else {
+                    log.info(id + ": Please pay the overtime fee by Octopus Card!");
+                    touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.OC_OctopusCardPaid,  "Please pay the overtime fee by Octopus Card!" + MatchCabID));
+                }
+            }
+            else{
+                log.info(id + "please pick up your parcel at door:" + MatchCabID);
+                touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.CodeVerifyResult,  "Please pick up your parcel at door:" + MatchCabID));
+                CabinetGroup1.getCabinet(MatchCabID).setOpenStatus("open");
+                CabinetGroup1.getCabinet(MatchCabID).setOpenCode("null");
+                CabinetGroup1.getCabinet(MatchCabID).setBarcode("null");
+                String PickTime = String.valueOf(currentTime.getTime());
+                setLockerProperty(MatchCabID,PickTime,"null","open");
+            }
 
         }else{
             log.info(id+":Wrong pick up code, please try again!");
