@@ -6,6 +6,7 @@ import AppKickstarter.misc.*;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Properties;
 
@@ -67,6 +68,18 @@ public class SLSvrHandler extends HWHandler{
             if(barcode.equals(msg.getDetails())){
                 MBox touchDisplayMBox = appKickstarter.getThread("TouchDisplayHandler").getMBox();
                 slc.send(new Msg(id, mbox, Msg.Type.BarcodeVerify, ("Correct Barcode,"+barcode)));
+                Properties cfgProps1 = null;
+                cfgProps1 = new Properties();
+                FileInputStream in = new FileInputStream("etc/SLSVr.cfg");
+                cfgProps1.load(in);
+                in.close();
+                String BarcodeToDelete = "SLSvr.Barcode"+i;
+                Object s = cfgProps1.setProperty(BarcodeToDelete,"null");
+                FileOutputStream out = new FileOutputStream("etc/SLSvr.cfg");
+                cfgProps1.store(out,"update barcode data");
+                if (s == null) {
+                    log.severe(id + ": getProperty(" + s + ") failed.  Check the config file etc/SLSvr.cfg!");
+                }
                 return;
             }
         }

@@ -167,7 +167,6 @@ public class SLC extends AppThread {
        String refreshProperty = pickupCode+"-"+openStatus+"-"+time;
         System.out.println(refreshProperty);
         Object s = cfgProps1.setProperty(lockerKey,refreshProperty);
-        System.out.println(s);
         FileOutputStream out = new FileOutputStream("etc/Locker.cfg");
         cfgProps1.store(out,"update locker data");
         if (s == null) {
@@ -186,6 +185,7 @@ public class SLC extends AppThread {
             Timestamp currentTime = new Timestamp(System.currentTimeMillis());
             String PickTime = String.valueOf(currentTime.getTime());
             setLockerProperty(MatchCabID,PickTime,"null","open");
+
         }else{
             log.info(id+":Wrong pick up code, please try again!");
             touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.CodeVerifyResult,"Wrong pick up code, please try again!"));
