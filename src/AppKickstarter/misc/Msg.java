@@ -105,7 +105,7 @@ public class Msg {
         /** Card inserted */    OC_OctopusCardRead,
         /** OctopusCard  Go Activate */ OC_GoActive,
         /** OctopusCard  Go Standby */  OC_GoStandby,
-        /** OctopusCard  Go Standby */  OC_OctopusCardPaid,
+        /** OctopusCard  Paid */  OC_OctopusCardPaid,
         /**Barcode Verify*/ BarcodeVerify,
         SysDiagnostic,
         SysShutdown,

@@ -59,6 +59,7 @@ public class OctopusCardReaderEmulator extends OctopusCardReaderDriver {
         // fixme
         super.handleGoActive();
         octopusCardReaderEmulatorController.appendTextArea("OctopusCard Reader Activated");
+
     } // handleGoActive
 
 

@@ -61,9 +61,12 @@ public class SLC extends AppThread {
                     Timer.setTimer(id, mbox, pollingTime);
                     log.info("Poll: " + msg.getDetails());
                     barcodeReaderMBox.send(new Msg(id, mbox, Msg.Type.Poll, ""));
+                    octCardReaderMBox.send(new Msg(id, mbox,Msg.Type.Poll,""));
                     touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.Poll, ""));
                     lockerMBox.send(new Msg(id, mbox, Msg.Type.Poll, ""));
+                    SLSvrMBox.send(new Msg(id, mbox, Msg.Type.Poll,""));
                     break;
+
                 case SysDiagnostic:
                     barcodeReaderMBox.send(new Msg(id, mbox, Msg.Type.SysDiagnostic, ""));
                     touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.SysDiagnostic, ""));
@@ -171,7 +174,7 @@ public class SLC extends AppThread {
 
     private void processCodeVerify(Msg msg) throws IOException {
         String MatchCabID = CabinetGroup1.findMatchCabinet(msg.getDetails());
-        if (MatchCabID != null) {
+        if (MatchCabID != null) { //octopus paid status
             log.info(id + ": pick up code correct! please pick up your parcel at door:" + MatchCabID);
             CabinetGroup1.getCabinet(MatchCabID).setOpenStatus("open");
             CabinetGroup1.getCabinet(MatchCabID).setOpenCode("null");

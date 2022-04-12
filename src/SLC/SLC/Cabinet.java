@@ -12,7 +12,7 @@ public class Cabinet {
         this.OpenStatus = OpenStatus;
         this.OpenCode = OpenCode;
         this.Barcode = Barcode;
-        this.StoreTime = storeTime;
+        this.StoreTime = StoreTime;
     }
 
     public String getID() {
