@@ -1,49 +1,40 @@
-220413-06:58:57 [INFO] -- 
-220413-06:58:57 [INFO] -- 
-220413-06:58:57 [INFO] -- ============================================================
-220413-06:58:57 [INFO] -- SLCStarter: Application Starting...
-220413-06:58:59 [INFO] -- timer: starting...
-220413-06:58:59 [INFO] -- TouchDisplayHandler: starting...
-220413-06:58:59 [INFO] -- OctopusCardReaderDriver: starting...
-220413-06:58:59 [INFO] -- LockerDriver: starting...
-220413-06:58:59 [INFO] -- BarcodeReaderDriver: starting...
-220413-06:58:59 [INFO] -- SLC: starting...
-220413-06:58:59 [INFO] -- TouchDisplayHandler: loading fxml: TouchDisplayEmulator.fxml
-220413-06:58:59 [INFO] -- SLSvrHandler: starting...
-220413-06:58:59 [INFO] -- SLSvrHandler: loading fxml: SLSvrEmulator.fxml
-220413-06:59:05 [INFO] -- Poll: TimesUp 47192 0
-220413-06:59:05 [INFO] -- PollAck: TouchDisplayHandler is up!
-220413-06:59:05 [INFO] -- PollAck: LockerDriver is up!
-220413-06:59:05 [INFO] -- PollAck: SLSvrHandler is up!
-220413-06:59:05 [INFO] -- PollAck: OctopusCardReaderDriver is up!
-220413-06:59:05 [INFO] -- PollAck: BarcodeReaderDriver is up!
-220413-06:59:10 [INFO] -- ButtonCLicked: Correct Barcode,4107-7014,L
-220413-06:59:11 [INFO] -- TouchDisplayHandler: pickup code: 810705, LockerID:19
-220413-06:59:11 [INFO] -- SLC: success generate a pickup code, please put your parcel in the door:19
-220413-06:59:11 [INFO] -- Poll: TimesUp 57733 0
-220413-06:59:11 [INFO] -- PollAck: LockerDriver is up!
-220413-06:59:11 [INFO] -- PollAck: SLSvrHandler is up!
-220413-06:59:11 [INFO] -- PollAck: BarcodeReaderDriver is up!
-220413-06:59:11 [INFO] -- PollAck: OctopusCardReaderDriver is up!
-220413-06:59:11 [INFO] -- PollAck: TouchDisplayHandler is up!
-220413-06:59:17 [INFO] -- Poll: TimesUp 42313 0
-220413-06:59:17 [INFO] -- PollAck: BarcodeReaderDriver is up!
-220413-06:59:17 [INFO] -- PollAck: TouchDisplayHandler is up!
-220413-06:59:17 [INFO] -- PollAck: SLSvrHandler is up!
-220413-06:59:17 [INFO] -- PollAck: LockerDriver is up!
-220413-06:59:17 [INFO] -- PollAck: OctopusCardReaderDriver is up!
-220413-06:59:23 [INFO] -- Poll: TimesUp 45521 0
-220413-06:59:23 [INFO] -- PollAck: OctopusCardReaderDriver is up!
-220413-06:59:23 [INFO] -- PollAck: TouchDisplayHandler is up!
-220413-06:59:23 [INFO] -- PollAck: BarcodeReaderDriver is up!
-220413-06:59:23 [INFO] -- PollAck: LockerDriver is up!
-220413-06:59:23 [INFO] -- PollAck: SLSvrHandler is up!
-220413-06:59:25 [INFO] -- ButtonCLicked: Correct Barcode,1005-5001,S
-220413-06:59:25 [INFO] -- TouchDisplayHandler: pickup code: 674138, LockerID:7
-220413-06:59:25 [INFO] -- SLC: success generate a pickup code, please put your parcel in the door:7
-220413-06:59:29 [INFO] -- Poll: TimesUp 45574 0
-220413-06:59:29 [INFO] -- PollAck: BarcodeReaderDriver is up!
-220413-06:59:29 [INFO] -- PollAck: LockerDriver is up!
-220413-06:59:29 [INFO] -- PollAck: TouchDisplayHandler is up!
-220413-06:59:29 [INFO] -- PollAck: OctopusCardReaderDriver is up!
-220413-06:59:29 [INFO] -- PollAck: SLSvrHandler is up!
+220413-06:32:35 [INFO] -- 
+220413-06:32:35 [INFO] -- 
+220413-06:32:35 [INFO] -- ============================================================
+220413-06:32:35 [INFO] -- SLCStarter: Application Starting...
+220413-06:32:36 [INFO] -- timer: starting...
+220413-06:32:36 [INFO] -- OctopusCardReaderDriver: starting...
+220413-06:32:36 [INFO] -- BarcodeReaderDriver: starting...
+220413-06:32:36 [INFO] -- TouchDisplayHandler: starting...
+220413-06:32:36 [INFO] -- LockerDriver: starting...
+220413-06:32:36 [INFO] -- SLSvrHandler: starting...
+220413-06:32:36 [INFO] -- SLC: starting...
+220413-06:32:36 [INFO] -- TouchDisplayHandler: loading fxml: TouchDisplayEmulator.fxml
+220413-06:32:36 [INFO] -- SLSvrHandler: loading fxml: SLSvrEmulator.fxml
+220413-06:32:42 [INFO] -- Poll: TimesUp 40048 0
+220413-06:32:42 [INFO] -- PollAck: BarcodeReaderDriver is up!
+220413-06:32:42 [INFO] -- PollAck: LockerDriver is up!
+220413-06:32:42 [INFO] -- PollAck: TouchDisplayHandler is up!
+220413-06:32:42 [INFO] -- PollAck: OctopusCardReaderDriver is up!
+220413-06:32:42 [INFO] -- PollAck: SLSvrHandler is up!
+220413-06:32:47 [INFO] -- ButtonCLicked: Request StoreParcel,2026-6202
+220413-06:32:47 [INFO] -- TouchDisplayHandler: pickup code: 673106, LockerID:7
+220413-06:32:47 [INFO] -- SLC: success generate a pickup code, please put your parcel in the door:7
+220413-06:32:48 [INFO] -- Poll: TimesUp 77404 0
+220413-06:32:48 [INFO] -- PollAck: SLSvrHandler is up!
+220413-06:32:48 [INFO] -- PollAck: TouchDisplayHandler is up!
+220413-06:32:48 [INFO] -- PollAck: LockerDriver is up!
+220413-06:32:48 [INFO] -- PollAck: BarcodeReaderDriver is up!
+220413-06:32:48 [INFO] -- PollAck: OctopusCardReaderDriver is up!
+220413-06:32:50 [INFO] -- TouchDisplayHandler: update display -- MainMenu
+220413-06:32:50 [INFO] -- ButtonCLicked: Request PickParcel!
+220413-06:32:50 [INFO] -- TouchDisplayHandler: loading fxml: TouchDisplayMainMenu.fxml
+220413-06:32:54 [INFO] -- Poll: TimesUp 36268 0
+220413-06:32:54 [INFO] -- PollAck: BarcodeReaderDriver is up!
+220413-06:32:54 [INFO] -- PollAck: LockerDriver is up!
+220413-06:32:54 [INFO] -- PollAck: OctopusCardReaderDriver is up!
+220413-06:32:54 [INFO] -- PollAck: SLSvrHandler is up!
+220413-06:32:54 [INFO] -- PollAck: TouchDisplayHandler is up!
+220413-06:32:55 [INFO] -- TouchDisplayHandler sending pickup code: 673106 to verify...
+220413-06:32:55 [INFO] -- TouchDisplayHandler: verify message sent...
+220413-06:32:55 [INFO] -- SLC receive customer's pickup code,start verify...

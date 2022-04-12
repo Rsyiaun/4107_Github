@@ -35,7 +35,7 @@ public class LockerEmulatorController {
     private ArrayList <Lockers> aL = new ArrayList<>();
     public TextField barcodeNumField;
     public TextField barcodeReaderStatusField;
-    public TextArea barcodeReaderTextArea;
+    public TextArea  barcodeReaderTextArea;
     public ChoiceBox standbyRespCBox;
     public ChoiceBox activationRespCBox;
     public ChoiceBox pollRespCBox;

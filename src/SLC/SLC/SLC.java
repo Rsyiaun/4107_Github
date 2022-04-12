@@ -146,6 +146,7 @@ public class SLC extends AppThread {
                 sb.append(str.charAt(number));
             }
             String pickUpCode = sb.toString();
+            String EmptyCabinetID = CabinetGroup1.getEmptyID();
             String[] msgArray = msg.getDetails().split(",");
             String EmptyCabinetID = CabinetGroup1.getEmptyID(msgArray[2]);
 
@@ -195,6 +196,42 @@ public class SLC extends AppThread {
             Timestamp currentTime = new Timestamp(System.currentTimeMillis());
             String PickTime = String.valueOf(currentTime.getTime());
             setLockerProperty(MatchCabID,"null","null","open",size);
+        String MatchCabID = CabinetGroup1.findMatchCabinet(msg.getDetails());//return cabinet id
+
+        if (MatchCabID != null) {
+
+            Cabinet cabinet = CabinetGroup1.getCabinet(MatchCabID);
+            Timestamp storageTime = Timestamp.valueOf(cabinet.getStoreTime());
+            Timestamp currentTime = new Timestamp(System.currentTimeMillis());
+            Long hours = (currentTime.getTime()-storageTime.getTime()  ) / 1000/60/60 ;
+
+            String OctopusPaid = String.valueOf(octCardReaderMBox.receive());
+
+            log.info(id + ": pick up code correct! Verifying storage hours...");
+            touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.CodeVerifyResult,  "pick up code correct! Verifying storage hours..." + MatchCabID));
+            if (hours>24){
+                if(OctopusPaid.contains("Paid")){
+                    log.info(id + "please pick up your parcel at door:" + MatchCabID);
+                    touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.CodeVerifyResult,  "Successfully Paid! please pick up your parcel at door:" + MatchCabID));
+                    CabinetGroup1.getCabinet(MatchCabID).setOpenStatus("open");
+                    CabinetGroup1.getCabinet(MatchCabID).setOpenCode("null");
+                    CabinetGroup1.getCabinet(MatchCabID).setBarcode("null");
+                    String PickTime = String.valueOf(currentTime.getTime());
+                    setLockerProperty(MatchCabID,PickTime,"null","open");
+                }else {
+                    log.info(id + ": Please pay the overtime fee by Octopus Card!");
+                    touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.OC_OctopusCardPaid,  "Please pay the overtime fee by Octopus Card!" + MatchCabID));
+                }
+            }
+            else{
+                log.info(id + "please pick up your parcel at door:" + MatchCabID);
+                touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.CodeVerifyResult,  "Please pick up your parcel at door:" + MatchCabID));
+                CabinetGroup1.getCabinet(MatchCabID).setOpenStatus("open");
+                CabinetGroup1.getCabinet(MatchCabID).setOpenCode("null");
+                CabinetGroup1.getCabinet(MatchCabID).setBarcode("null");
+                String PickTime = String.valueOf(currentTime.getTime());
+                setLockerProperty(MatchCabID,PickTime,"null","open",size);
+            }
 
         }else{
             log.info(id+":Wrong pick up code, please try again!");
