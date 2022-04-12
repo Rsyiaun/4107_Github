@@ -19,7 +19,7 @@ public class OctopusCardReaderDriver extends HWHandler {
     protected void processMsg(Msg msg) {
         switch (msg.getType()) {
             case OC_OctopusCardRead:
-                slc.send(new Msg(id, mbox, Msg.Type.BR_BarcodeRead, msg.getDetails()));
+                slc.send(new Msg(id, mbox, Msg.Type.OC_OctopusCardRead, msg.getDetails()));
                 break;
 
             case OC_GoActive:
