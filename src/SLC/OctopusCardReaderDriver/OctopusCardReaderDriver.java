@@ -26,6 +26,10 @@ public class OctopusCardReaderDriver extends HWHandler {
                 slc.send(new Msg(id, mbox, Msg.Type.OC_OctopusCardRead, msg.getDetails()));
                 break;
 
+            case OC_OctopusCardPaid:
+                slc.send(new Msg(id, mbox, Msg.Type.OC_OctopusCardPaid, msg.getDetails()));
+                break;
+
             case OC_GoActive:
                 handleGoActive();
                 break;
