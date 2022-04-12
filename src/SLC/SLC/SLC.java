@@ -160,7 +160,7 @@ public class SLC extends AppThread {
     public void setLockerProperty(String lockerID,String time,String pickupCode,String openStatus) throws IOException {
         Properties cfgProps1 = null;
         cfgProps1 = new Properties();
-        FileInputStream in = new FileInputStream("etc/SLC.cfg");
+        FileInputStream in = new FileInputStream("etc/Locker.cfg");
         cfgProps1.load(in);
         in.close();
         String lockerKey = "Lockers.Locker"+lockerID;
@@ -168,7 +168,7 @@ public class SLC extends AppThread {
         System.out.println(refreshProperty);
         Object s = cfgProps1.setProperty(lockerKey,refreshProperty);
         System.out.println(s);
-        FileOutputStream out = new FileOutputStream("etc/SLC.cfg");
+        FileOutputStream out = new FileOutputStream("etc/Locker.cfg");
         cfgProps1.store(out,"update locker data");
         if (s == null) {
             log.severe(id + ": getProperty(" + s + ") failed.  Check the config file etc/SLSvr.cfg!");

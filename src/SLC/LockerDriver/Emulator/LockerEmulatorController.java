@@ -4,9 +4,12 @@ import AppKickstarter.AppKickstarter;
 import AppKickstarter.misc.MBox;
 import AppKickstarter.misc.Msg;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Properties;
 import java.util.logging.Logger;
 
 import javafx.beans.value.ChangeListener;
@@ -78,7 +81,12 @@ public class LockerEmulatorController {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                ArrayList <Integer> i  = checkStatus();
+                ArrayList <Integer> i  = null;
+                try {
+                    i = checkStatus();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
 
                 for(int j = 0 ; j < i.size(); j++){
 
@@ -101,13 +109,18 @@ public class LockerEmulatorController {
     }
     //------------------------------------------------------------
     // check locker status
-    public ArrayList<Integer> checkStatus(){
+    public ArrayList<Integer> checkStatus() throws IOException {
         String  status ;
-        final String LockerSize = appKickstarter.getProperty("Lockers.NumOfLocker"); //Need To be change to 40 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        Properties cfgProps1 = null;
+        cfgProps1 = new Properties();
+        FileInputStream in = new FileInputStream("etc/Locker.cfg");
+        cfgProps1.load(in);
+        in.close();
+        final String LockerSize =cfgProps1.getProperty("Lockers.NumOfLocker"); //Need To be change to 40 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         ArrayList <Integer> lk = new ArrayList<Integer>();
         for(int i = 1 ; i <= Integer.parseInt(LockerSize); i++){
             String lockerValue = "Lockers.Locker" + i;
-            String lockerDetail = appKickstarter.getProperty(lockerValue);
+            String lockerDetail = cfgProps1.getProperty(lockerValue);
             String [] detailSplit = lockerDetail.split("-");
             status = detailSplit[1];
             if (status.equals("open")){
@@ -216,7 +229,7 @@ public class LockerEmulatorController {
     }
     //------------------------------------------------------------
     // Generate a arraylist of locker var
-    public ArrayList<Lockers> getLockerData(){
+    public ArrayList<Lockers> getLockerData() throws IOException {
         String  accessCode ;
         String  storageTime;
         String  status ;
@@ -224,9 +237,14 @@ public class LockerEmulatorController {
         final int LockerSize = 40; //Need To be change to 40 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         ArrayList <Lockers> aL = new ArrayList<>();
 
+        Properties cfgProps1 = null;
+        cfgProps1 = new Properties();
+        FileInputStream in = new FileInputStream("etc/Locker.cfg");
+        cfgProps1.load(in);
+        in.close();
         for(int i = 1 ; i <= LockerSize; i++){
             String lockerValue = "Lockers.Locker" + i;
-            String lockerDetail = appKickstarter.getProperty(lockerValue);
+            String lockerDetail =  cfgProps1.getProperty(lockerValue);
             String [] detailSplit = lockerDetail.split("-");
             accessCode = detailSplit[0]; status = detailSplit[1]; storageTime = (detailSplit[2]); id = i-1;
             Lockers lk = new Lockers(accessCode, status,  storageTime, id );

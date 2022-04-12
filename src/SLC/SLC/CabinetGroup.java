@@ -14,7 +14,7 @@ public class CabinetGroup {
         for(int i=1;i<=40;i++){
             Properties cfgProps1 = null;
             cfgProps1 = new Properties();
-            FileInputStream in = new FileInputStream("etc/SLC.cfg");
+            FileInputStream in = new FileInputStream("etc/Locker.cfg");
             cfgProps1.load(in);
             in.close();
             String s = cfgProps1.getProperty("Lockers.Locker"+String.valueOf(i));
