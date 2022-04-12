@@ -4,11 +4,13 @@ public class Cabinet {
     private Boolean EmptyStatus;
     private String CabinetID;
     private String OpenCode;
+    private String Barcode;
 
-    public Cabinet (String ID,Boolean EmptyStatus,String OpenCode ){
+    public Cabinet (String ID,Boolean EmptyStatus,String OpenCode,String Barcode ){
         this.CabinetID=ID;
         this.EmptyStatus=EmptyStatus;
         this.OpenCode=OpenCode;
+        this.Barcode=Barcode;
     }
 
     public String getID(){
@@ -26,6 +28,8 @@ public class Cabinet {
     public void setEmptyStatus(Boolean status){
         this.EmptyStatus=status;
     }
+    public void setBarcode(String code){this.Barcode=code;}
+    public String getBarcode(){return this.Barcode;}
 
 }
 

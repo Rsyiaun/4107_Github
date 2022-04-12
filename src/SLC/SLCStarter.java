@@ -9,6 +9,7 @@ import SLC.SLC.SLC;
 import SLC.BarcodeReaderDriver.BarcodeReaderDriver;
 import SLC.OctopusCardReaderDriver.OctopusCardReaderDriver;
 import SLC.TouchDisplayHandler.TouchDisplayHandler;
+import SLC.SLSvrHandler.SLSvrHandler;
 
 import javafx.application.Platform;
 
@@ -22,6 +23,7 @@ public class SLCStarter extends AppKickstarter {
     protected OctopusCardReaderDriver octopusReaderDriver;
     protected TouchDisplayHandler touchDisplayHandler;
 	protected LockerDriver lockerDriver;
+	protected SLSvrHandler slsvrHandler;
 
     //------------------------------------------------------------
     // main
@@ -60,7 +62,8 @@ public class SLCStarter extends AppKickstarter {
 	    barcodeReaderDriver = new BarcodeReaderDriver("BarcodeReaderDriver", this);
 	    octopusReaderDriver = new OctopusCardReaderDriver("OctopusCardReaderDriver",this);
 	    touchDisplayHandler = new TouchDisplayHandler("TouchDisplayHandler", this);
-		lockerDriver = new LockerDriver("LockerDriver", this);
+	    lockerDriver = new LockerDriver("LockerDriver", this);
+		slsvrHandler = new SLSvrHandler("SLSvrHandler",this);
 	} catch (Exception e) {
 	    System.out.println("AppKickstarter: startApp failed");
 	    e.printStackTrace();
@@ -74,6 +77,7 @@ public class SLCStarter extends AppKickstarter {
 	new Thread(octopusReaderDriver).start();
 	new Thread(touchDisplayHandler).start();
 	new Thread(lockerDriver).start();
+	new Thread(slsvrHandler).start();
     } // startHandlers
 
 
@@ -90,5 +94,6 @@ public class SLCStarter extends AppKickstarter {
 	touchDisplayHandler.getMBox().send(new Msg(id, null, Msg.Type.Terminate, "Terminate now!"));
 	lockerDriver.getMBox().send(new Msg(id, null, Msg.Type.Terminate, "Terminate now!"));
 	timer.getMBox().send(new Msg(id, null, Msg.Type.Terminate, "Terminate now!"));
+	slsvrHandler.getMBox().send(new Msg(id,null,Msg.Type.Terminate,"Terminate now!"));
     } // stopApp
 } // SLCStarter

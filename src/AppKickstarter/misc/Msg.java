@@ -104,7 +104,8 @@ public class Msg {
         Diagnostic,
         OC_OctopusCardRead,
         OC_GoActive,
-        OC_GoStandby
+        OC_GoStandby,
+        /**Barcode Verify*/ BarcodeVerify,
 
     } // Type
 } // Msg

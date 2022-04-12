@@ -22,7 +22,6 @@ public class TouchDisplayHandler extends HWHandler {
     //------------------------------------------------------------
     // processMsg
     protected void processMsg(Msg msg) {
-        System.out.println("get "+msg.getDetails());
         switch (msg.getType()) {
             case TD_MouseClicked:
                 slc.send(new Msg(id, mbox, Msg.Type.TD_MouseClicked, msg.getDetails()));
@@ -40,11 +39,13 @@ public class TouchDisplayHandler extends HWHandler {
                 slc.send(new Msg(id,mbox,Msg.Type.CodeToVerify,msg.getDetails()));
                 break;
             case CodeVerifyResult:
-                touchDisplayMBox.send(msg);
+               ShowCodeVerifyResult(msg);
                 break;
             case PickupCodeMsg:
-                System.out.println("get "+msg.getDetails());
-                touchDisplayMBox.send(new Msg(id,mbox,Msg.Type.PickupCodeMsg,msg.getDetails()));
+               ShowPickUpCodeMsg(msg);
+                break;
+            case BarcodeVerify:
+                GetBarcodeChecked(msg);
                 break;
             default:
                 log.warning(id + ": unknown message type: [" + msg + "]");
@@ -72,4 +73,13 @@ public class TouchDisplayHandler extends HWHandler {
         log.info(id + ": pickupCode display : " + msg.getDetails());
     } // handlePickupCodeDisplay
 
+    public void GetBarcodeChecked(Msg msg) {
+log.info(id+":SLSvr already checked the barcode:"+msg.getDetails());
+    }
+
+    public void ShowPickUpCodeMsg(Msg msg) {
+    }
+    void ShowCodeVerifyResult(Msg msg) {
+   System.out.println("receive Barcode checking result from server: "+msg.getDetails());
+    }
 } // TouchDisplayHandler

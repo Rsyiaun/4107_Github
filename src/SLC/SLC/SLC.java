@@ -16,6 +16,7 @@ public class SLC extends AppThread {
     private MBox touchDisplayMBox1;
     private MBox lockerMBox;
     private CabinetGroup CabinetGroup1;
+    private MBox SLSvrMBox;
 
     //------------------------------------------------------------
     // SLC
@@ -36,12 +37,7 @@ public class SLC extends AppThread {
         touchDisplayMBox = appKickstarter.getThread("TouchDisplayHandler").getMBox();
         touchDisplayMBox1 = appKickstarter.getThread("TouchDisplayHandler").getMBox();
         lockerMBox = appKickstarter.getThread("LockerDriver").getMBox();
-
-
-
-
-
-
+        SLSvrMBox = appKickstarter.getThread("SLSvrHandler").getMBox();
 
 
         for (boolean quit = false; !quit; ) {
@@ -61,6 +57,7 @@ public class SLC extends AppThread {
                     barcodeReaderMBox.send(new Msg(id, mbox, Msg.Type.Poll, ""));
                     touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.Poll, ""));
                     lockerMBox.send(new Msg(id, mbox, Msg.Type.Poll, ""));
+                    SLSvrMBox.send(new Msg(id, mbox, Msg.Type.Poll, ""));
                     break;
                 case Diagnostic:
 
@@ -81,7 +78,10 @@ public class SLC extends AppThread {
                     log.info("SLC receive customer's pickup code,start verify...");
                     processCodeVerify(msg);
                     break;
-
+                case BR_BarcodeRead:
+                   System.out.println("SLC got the Barcode form emulator,sending to SLSvr...");
+                    SLSvrMBox.send(new Msg(id,mbox,Msg.Type.BR_BarcodeRead,msg.getDetails()));
+                    break;
                 default:
                     log.warning(id + ": unknown message type: [" + msg + "]");
             }
@@ -102,7 +102,8 @@ public class SLC extends AppThread {
     //------------------------------------------------------------
     // processButtonClicked
     private void processButtonClicked(Msg msg) {
-        if (msg.getDetails().equals("Request StoreParcel!")) {
+        if (msg.getDetails().contains("Request StoreParcel")) {
+            String[] msgArray = msg.getDetails().split(",");
             String str = "0123456789";
             Random random = new Random();
             StringBuffer sb = new StringBuffer();
@@ -115,7 +116,8 @@ public class SLC extends AppThread {
             if (EmptyCabinetID != null) {
                 CabinetGroup1.getCabinet(EmptyCabinetID).setOpenCode(pickUpCode);
                 CabinetGroup1.getCabinet(EmptyCabinetID).setEmptyStatus(false);
-                touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.PickupCodeMsg, "pickup code: "+pickUpCode+", LockerID:"+EmptyCabinetID));
+                CabinetGroup1.getCabinet(EmptyCabinetID).setBarcode(msgArray[1]);
+                touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.PickupCodeMsg, "pickup code: " + pickUpCode + ", LockerID:" + EmptyCabinetID));
                 log.info(id + ": success generate a pickup code, please put your parcel in the door:" + EmptyCabinetID);
             } else {
                 touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.PickupCodeMsg, "full"));
@@ -129,13 +131,12 @@ public class SLC extends AppThread {
         if (MatchCabID != null) {
             log.info(id + ": pick up code correct! please pick up your parcel at door:" + MatchCabID);
             CabinetGroup1.getCabinet(MatchCabID).setEmptyStatus(true);
-            touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.CodeVerifyResult,  "pick up code correct! please pick up your parcel at door:" + MatchCabID));
-        }else{
-            log.info(id+":Wrong pick up code, please try again!");
-            touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.CodeVerifyResult,"Wrong pick up code, please try again!"));
+            touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.CodeVerifyResult, "pick up code correct! please pick up your parcel at door:" + MatchCabID));
+        } else {
+            log.info(id + ":Wrong pick up code, please try again!");
+            touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.CodeVerifyResult, "Wrong pick up code, please try again!"));
         }
     }
-
 
 
 } // SLC

@@ -22,6 +22,7 @@ public class BarcodeReaderEmulatorController {
     private Logger log;
     private BarcodeReaderEmulator barcodeReaderEmulator;
     private MBox barcodeReaderMBox;
+    private MBox SLSvrMBox;
     private String activationResp;
     private String standbyResp;
     private String pollResp;
@@ -41,6 +42,7 @@ public class BarcodeReaderEmulatorController {
 	this.log = log;
 	this.barcodeReaderEmulator = barcodeReaderEmulator;
 	this.barcodeReaderMBox = appKickstarter.getThread("BarcodeReaderDriver").getMBox();
+        this.SLSvrMBox = appKickstarter.getThread("SLSvrHandler").getMBox();
         this.activationRespCBox.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
@@ -93,6 +95,7 @@ public class BarcodeReaderEmulatorController {
 
 	    case "Send Barcode":
                 barcodeReaderMBox.send(new Msg(id, barcodeReaderMBox, Msg.Type.BR_BarcodeRead, barcodeNumField.getText()));
+           SLSvrMBox.send(new Msg(id, barcodeReaderMBox, Msg.Type.BR_BarcodeRead, barcodeNumField.getText()));
                 barcodeReaderTextArea.appendText("Sending barcode " + barcodeNumField.getText()+"\n");
 		break;
 

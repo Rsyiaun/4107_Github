@@ -3,12 +3,15 @@ package SLC.HWHandler;
 import AppKickstarter.AppKickstarter;
 import AppKickstarter.misc.*;
 
+import java.io.IOException;
+
 
 //======================================================================
 // HWHandler
 public abstract class HWHandler extends AppThread {
     protected MBox slc = null;
     protected  MBox touchDisplayMBox=null;
+    protected  MBox SLSvrMBox = null;
 
     //------------------------------------------------------------
     // HWHandler
@@ -25,7 +28,6 @@ public abstract class HWHandler extends AppThread {
 
         for (boolean quit = false; !quit;) {
             Msg msg = mbox.receive();
-
             log.fine(id + ": message received: [" + msg + "].");
 
             switch (msg.getType()) {
@@ -38,7 +40,11 @@ public abstract class HWHandler extends AppThread {
                     break;
 
                 default:
-                    processMsg(msg);
+                    try {
+                        processMsg(msg);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
             }
         }
 
@@ -50,6 +56,6 @@ public abstract class HWHandler extends AppThread {
 
     //------------------------------------------------------------
     // abstract methods
-    protected abstract void processMsg(Msg msg);
+    protected abstract void processMsg(Msg msg) throws IOException;
     protected abstract void handlePoll();
 } // HWHandler

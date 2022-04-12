@@ -6,12 +6,9 @@ public class CabinetGroup {
     private ArrayList<Cabinet> CabGroup = new ArrayList<Cabinet>();
 
     public CabinetGroup(){
-        this.CabGroup.add(new Cabinet("A1",true,""));
-        this.CabGroup.add(new Cabinet("A2",true,""));
-        this.CabGroup.add(new Cabinet("A3",true,""));
-        this.CabGroup.add(new Cabinet("A4",true,""));
-        this.CabGroup.add(new Cabinet("A5",true,""));
-        this.CabGroup.add(new Cabinet("A6",true,""));
+        for(int i=0;i<40;i++){
+            this.CabGroup.add((new Cabinet("A"+i,true,"","")));
+        }
     }
 
 

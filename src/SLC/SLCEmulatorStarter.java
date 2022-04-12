@@ -11,6 +11,8 @@ import SLC.OctopusCardReaderDriver.Emulator.OctopusCardReaderEmulator;
 import SLC.OctopusCardReaderDriver.OctopusCardReaderDriver;
 import SLC.TouchDisplayHandler.Emulator.TouchDisplayEmulator;
 import SLC.TouchDisplayHandler.TouchDisplayHandler;
+import SLC.SLSvrHandler.Emulator.SLSvrEmulator;
+import SLC.SLSvrHandler.SLSvrHandler;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.stage.Stage;
@@ -55,6 +57,7 @@ public class SLCEmulatorStarter extends SLCStarter {
 	    OctopusCardReaderEmulator octopusCardReaderEmulator = null;
 	    TouchDisplayEmulator touchDisplayEmulator = null;
             LockerEmulator lockerEmulator = null;
+          SLSvrEmulator SLSvrEmulator = null;
 	    // create emulators
 	    try {
 	        timer = new Timer("timer", slcEmulatorStarter);
@@ -63,11 +66,13 @@ public class SLCEmulatorStarter extends SLCStarter {
 		octopusCardReaderEmulator = new OctopusCardReaderEmulator("OctopusCardReaderDriver", slcEmulatorStarter);
 	        touchDisplayEmulator = new TouchDisplayEmulator("TouchDisplayHandler", slcEmulatorStarter);
             lockerEmulator = new LockerEmulator("LockerDriver", slcEmulatorStarter);
+          SLSvrEmulator = new SLSvrEmulator("SLSvrHandler",slcEmulatorStarter);
 		// start emulator GUIs
                 barcodeReaderEmulator.start();
 		octopusCardReaderEmulator.start();
 		touchDisplayEmulator.start();
         lockerEmulator.start();
+       SLSvrEmulator.start();
 	    } catch (Exception e) {
 		System.out.println("Emulators: start failed");
 		e.printStackTrace();
@@ -79,6 +84,7 @@ public class SLCEmulatorStarter extends SLCStarter {
 	    slcEmulatorStarter.setOctopusCardReaderDriver(octopusCardReaderEmulator);
 	    slcEmulatorStarter.setTouchDisplayHandler(touchDisplayEmulator);
         slcEmulatorStarter.setLockerDriver(lockerEmulator);
+       slcEmulatorStarter.setSLSvrHandler(SLSvrEmulator);
 	    // start threads
 	    new Thread(timer).start();
 	    new Thread(slc).start();
@@ -86,6 +92,7 @@ public class SLCEmulatorStarter extends SLCStarter {
 	    new Thread(octopusCardReaderEmulator).start();
 	    new Thread(touchDisplayEmulator).start();
             new Thread(lockerEmulator).start();
+           new Thread(SLSvrEmulator).start();
 	} // start
     } // Emulators
 
@@ -110,4 +117,8 @@ public class SLCEmulatorStarter extends SLCStarter {
     private void setTouchDisplayHandler(TouchDisplayHandler touchDisplayHandler) {
         this.touchDisplayHandler = touchDisplayHandler;
     }
+    private void setSLSvrHandler(SLSvrHandler SLSvrHandler) {
+        this.slsvrHandler = SLSvrHandler;
+    }
+
 } // SLCEmulatorStarter

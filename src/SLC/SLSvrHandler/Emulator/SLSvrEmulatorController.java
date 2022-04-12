@@ -1,29 +1,25 @@
-package SLC.TouchDisplayHandler.Emulator;
+package SLC.SLSvrHandler.Emulator;
 
 import AppKickstarter.AppKickstarter;
 import AppKickstarter.misc.MBox;
 import AppKickstarter.misc.Msg;
+import SLC.BarcodeReaderDriver.Emulator.BarcodeReaderEmulator;
+import SLC.TouchDisplayHandler.Emulator.TouchDisplayEmulator;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 
 import java.util.logging.Logger;
 
-
-//======================================================================
-// TouchDisplayEmulatorController
-public class TouchDisplayEmulatorController {
+public class SLSvrEmulatorController {
     private String id;
     private AppKickstarter appKickstarter;
     private Logger log;
-    private TouchDisplayEmulator touchDisplayEmulator;
-    private MBox touchDisplayMBox;
+    private SLSvrEmulator SLSvrEmulator;
+    private MBox SLSvrMBox;
     private String selectedScreen;
     private String pollResp;
     public ChoiceBox screenSwitcherCBox;
@@ -33,12 +29,12 @@ public class TouchDisplayEmulatorController {
 
     //------------------------------------------------------------
     // initialize
-    public void initialize(String id, AppKickstarter appKickstarter, Logger log, TouchDisplayEmulator touchDisplayEmulator, String pollRespParam) {
+    public void initialize(String id, AppKickstarter appKickstarter, Logger log, SLSvrEmulator SLSvrEmulator, String pollRespParam) {
         this.id = id;
         this.appKickstarter = appKickstarter;
         this.log = log;
-        this.touchDisplayEmulator = touchDisplayEmulator;
-        this.touchDisplayMBox = appKickstarter.getThread("TouchDisplayHandler").getMBox();
+        this.SLSvrEmulator = SLSvrEmulator;
+        this.SLSvrMBox = appKickstarter.getThread("SLSvrHandler").getMBox();
         this.pollResp = pollRespParam;
         this.pollRespCBox.setValue(this.pollResp);
         this.pollRespCBox.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
@@ -53,15 +49,15 @@ public class TouchDisplayEmulatorController {
                 selectedScreen = screenSwitcherCBox.getItems().get(newValue.intValue()).toString();
                 switch (selectedScreen) {
                     case "Blank":
-                        touchDisplayMBox.send(new Msg(id, touchDisplayMBox, Msg.Type.TD_UpdateDisplay, "BlankScreen"));
+                        SLSvrMBox.send(new Msg(id, SLSvrMBox, Msg.Type.TD_UpdateDisplay, "BlankScreen"));
                         break;
 
                     case "Main Menu":
-                        touchDisplayMBox.send(new Msg(id, touchDisplayMBox, Msg.Type.TD_UpdateDisplay, "MainMenu"));
+                        SLSvrMBox.send(new Msg(id, SLSvrMBox, Msg.Type.TD_UpdateDisplay, "MainMenu"));
                         break;
 
                     case "Confirmation":
-                        touchDisplayMBox.send(new Msg(id, touchDisplayMBox, Msg.Type.TD_UpdateDisplay, "Confirmation"));
+                        SLSvrMBox.send(new Msg(id,  SLSvrMBox, Msg.Type.TD_UpdateDisplay, "Confirmation"));
                         break;
                 }
             }
@@ -69,7 +65,6 @@ public class TouchDisplayEmulatorController {
         this.selectedScreen = screenSwitcherCBox.getValue().toString();
 
     } // initialize
-
 
     //------------------------------------------------------------
     // getSelectedScreen
@@ -92,38 +87,6 @@ public class TouchDisplayEmulatorController {
         int y = (int) mouseEvent.getY();
 
         log.fine(id + ": mouse clicked: -- (" + x + ", " + y + ")");
-        touchDisplayMBox.send(new Msg(id, touchDisplayMBox, Msg.Type.TD_MouseClicked, x + " " + y));
+        SLSvrMBox.send(new Msg(id, SLSvrMBox, Msg.Type.TD_MouseClicked, x + " " + y));
     } // td_mouseClick
-
-
-    // td_ButtonClick
-    public void td_PickBtnClick() {
-        String BtnMsg = "Request PickParcel!";
-        log.fine(id + ": Button clicked: -- (" + BtnMsg + ")");
-        touchDisplayMBox.send(new Msg(id, touchDisplayMBox, Msg.Type.TD_ButtonClicked, BtnMsg));
-        touchDisplayMBox.send(new Msg(id, touchDisplayMBox, Msg.Type.TD_UpdateDisplay, "MainMenu"));
-    } // td_ButtonClick
-
-    @FXML
-    private TextField InputPickupCode;
-    @FXML
-    private Label CodeVerifyResult;
-    //td_CodeInputOK, check if the pickup Code that customer input is correct
-    @FXML
-    public void td_CodeInputOK() {
-        String code = InputPickupCode.getText();
-        System.out.println(code);
-        log.info(id + " sending pickup code: " + code + " to verify...");
-        touchDisplayMBox.send(new Msg(id, touchDisplayMBox, Msg.Type.CodeToVerify, code));
-        log.info(id+": verify message sent...");
-        // Msg msg = touchDisplayMBox.receive();
-    }
-
-    //to check the Barcode
-    @FXML private Label NeedBarcodeMsg;
-    @FXML public void td_ClickStore(){
-        NeedBarcodeMsg.setText("Please scan the Barcode of the package first!");
-        // Msg msg = touchDisplayMBox.receive();
-    }
-
-} // TouchDisplayEmulatorController
+}

@@ -28,8 +28,8 @@
                 <Label fx:id="DoorOpenRemind" layoutX="51.0" layoutY="147.0" prefHeight="41.0" prefWidth="323.0" />
                 <Label fx:id="CodeGenerateMsg" layoutX="40.0" layoutY="181.0" prefHeight="15.0" prefWidth="369.0" />
             <Rectangle fx:id="PickParcel" arcHeight="5.0" arcWidth="5.0" fill="#ffffff00" height="72.0" layoutX="58.0" layoutY="332.0" onMouseClicked="#td_PickBtnClick" stroke="BLACK" strokeType="INSIDE" width="198.0" />
-            <Rectangle fx:id="StoreParcel" arcHeight="5.0" arcWidth="5.0" fill="#ffffff00" height="66.0" layoutX="313.0" layoutY="335.0" onMouseClicked="#td_StoreBtnClick" stroke="BLACK" strokeType="INSIDE" width="209.0" />
-            <Label fx:id="NeedBarCodeMsg" layoutX="116.0" layoutY="257.0" prefHeight="41.0" prefWidth="313.0">
+            <Rectangle fx:id="StoreParcel" arcHeight="5.0" arcWidth="5.0" fill="#ffffff00" height="66.0" layoutX="313.0" layoutY="335.0" onMouseClicked="#td_ClickStore" stroke="BLACK" strokeType="INSIDE" width="209.0" />
+            <Label fx:id="NeedBarcodeMsg" layoutX="116.0" layoutY="257.0" prefHeight="41.0" prefWidth="313.0">
                <font>
                   <Font size="14.0" />
                </font>
