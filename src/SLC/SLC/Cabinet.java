@@ -1,15 +1,15 @@
 package SLC.SLC;
 
 public class Cabinet {
-    private Boolean EmptyStatus;
+    private String OpenStatus;
     private String CabinetID;
     private String OpenCode;
     private String Barcode;
     private String StoreTime;
 
-    public Cabinet(String ID, Boolean EmptyStatus, String OpenCode, String Barcode) {
+    public Cabinet(String ID, String OpenStatus, String OpenCode, String Barcode,String storeTime) {
         this.CabinetID = ID;
-        this.EmptyStatus = EmptyStatus;
+        this.OpenStatus = OpenStatus;
         this.OpenCode = OpenCode;
         this.Barcode = Barcode;
         this.StoreTime = storeTime;
@@ -27,12 +27,12 @@ public class Cabinet {
         this.OpenCode = code;
     }
 
-    public Boolean getEmptyStatus() {
-        return this.EmptyStatus;
+    public String getOpenStatus() {
+        return this.OpenStatus;
     }
 
-    public void setEmptyStatus(Boolean status) {
-        this.EmptyStatus = status;
+    public void setOpenStatus(String status) {
+        this.OpenStatus = status;
     }
 
     public void setBarcode(String code) {

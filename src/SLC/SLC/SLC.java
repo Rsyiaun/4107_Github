@@ -75,6 +75,10 @@ public class SLC extends AppThread {
                     log.info("PollAck: " + msg.getDetails());
                     break;
 
+                case PollNak:
+                    log.info("PollNak: " + msg.getDetails() + " Broken hardware need to be checked!");
+                    break;
+
                 case Terminate:
                     quit = true;
 
@@ -133,7 +137,7 @@ public class SLC extends AppThread {
             String[] msgArray = msg.getDetails().split(",");
             if (EmptyCabinetID != null) {
                 CabinetGroup1.getCabinet(EmptyCabinetID).setOpenCode(pickUpCode);
-                CabinetGroup1.getCabinet(EmptyCabinetID).setEmptyStatus(false);
+                CabinetGroup1.getCabinet(EmptyCabinetID).setOpenStatus("open");
                 CabinetGroup1.getCabinet(EmptyCabinetID).setBarcode(msgArray[1]);
                 touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.PickupCodeMsg, "pickup code: "+pickUpCode+", LockerID:"+EmptyCabinetID));
                 Timestamp currentTime = new Timestamp(System.currentTimeMillis());
@@ -169,7 +173,9 @@ public class SLC extends AppThread {
         String MatchCabID = CabinetGroup1.findMatchCabinet(msg.getDetails());
         if (MatchCabID != null) {
             log.info(id + ": pick up code correct! please pick up your parcel at door:" + MatchCabID);
-            CabinetGroup1.getCabinet(MatchCabID).setEmptyStatus(true);
+            CabinetGroup1.getCabinet(MatchCabID).setOpenStatus("open");
+            CabinetGroup1.getCabinet(MatchCabID).setOpenCode("null");
+            CabinetGroup1.getCabinet(MatchCabID).setBarcode("null");
             touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.CodeVerifyResult,  "pick up code correct! please pick up your parcel at door:" + MatchCabID));
             Timestamp currentTime = new Timestamp(System.currentTimeMillis());
             String PickTime = String.valueOf(currentTime.getTime());

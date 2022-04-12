@@ -221,7 +221,7 @@ public class LockerEmulatorController {
         String  storageTime;
         String  status ;
         int  id;
-        final int LockerSize = 10; //Need To be change to 40 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        final int LockerSize = 40; //Need To be change to 40 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         ArrayList <Lockers> aL = new ArrayList<>();
 
         for(int i = 1 ; i <= LockerSize; i++){
