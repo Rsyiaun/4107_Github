@@ -7,7 +7,7 @@ public class CabinetGroup {
 
     public CabinetGroup(){
         for(int i=0;i<40;i++){
-            this.CabGroup.add((new Cabinet("A"+i,true,"","")));
+            this.CabGroup.add((new Cabinet(String.valueOf(i),true,"","")));
         }
     }
 
