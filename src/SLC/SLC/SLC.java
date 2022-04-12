@@ -188,17 +188,17 @@ public class SLC extends AppThread {
 
         if (MatchCabID != null) {
 
-            Cabinet cabinet = CabinetGroup1.getCabinet(MatchCabID);
-            Timestamp storageTime = new Timestamp(Long.valueOf(cabinet.getStoreTime()));
+            Cabinet cabinet = CabinetGroup1.getCabinet(MatchCabID);//match cabinet
+            Timestamp storageTime = new Timestamp(Long.valueOf(cabinet.getStoreTime()));//get cabinet storage tme
             Timestamp currentTime = new Timestamp(System.currentTimeMillis());
-            Long hours = (currentTime.getTime()-storageTime.getTime()  ) / 1000/60/60 ;
+            Long hours = (currentTime.getTime()-storageTime.getTime()  ) / 1000/60/60 ;//calculate storage hours
 
-            String OctopusPaid = String.valueOf(octCardReaderMBox.receive());
+            String OctopusPaid = String.valueOf(octCardReaderMBox.receive());//get octopus card payment status
 
             log.info(id + ": pick up code correct! Verifying storage hours...");
             touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.CodeVerifyResult,  "pick up code correct! Verifying storage hours..." + MatchCabID));
-            if (hours>24){
-                if(OctopusPaid.contains("Paid")){
+            if (hours>24){//overtime fee payment
+                if(OctopusPaid.contains("Paid")){//octopus card successfully paid
                     log.info(id + "please pick up your parcel at door:" + MatchCabID);
                     touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.CodeVerifyResult,  "Successfully Paid! please pick up your parcel at door:" + MatchCabID));
                     CabinetGroup1.getCabinet(MatchCabID).setOpenStatus("open");
@@ -206,12 +206,12 @@ public class SLC extends AppThread {
                     CabinetGroup1.getCabinet(MatchCabID).setBarcode("null");
                     String PickTime = String.valueOf(currentTime.getTime());
                     setLockerProperty(MatchCabID,PickTime,"null","open");
-                }else {
+                }else {//octopus card not paid
                     log.info(id + ": Please pay the overtime fee by Octopus Card!");
                     touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.OC_OctopusCardPaid,  "Please pay the overtime fee by Octopus Card!" + MatchCabID));
                 }
             }
-            else{
+            else{//no overtime fee
                 log.info(id + "please pick up your parcel at door:" + MatchCabID);
                 touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.CodeVerifyResult,  "Please pick up your parcel at door:" + MatchCabID));
                 CabinetGroup1.getCabinet(MatchCabID).setOpenStatus("open");
