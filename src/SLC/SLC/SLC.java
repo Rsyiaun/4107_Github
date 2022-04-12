@@ -107,6 +107,9 @@ public class SLC extends AppThread {
                     System.out.println("SLC got the Barcode form emulator,sending to SLSvr...");
                     SLSvrMBox.send(new Msg(id,mbox,Msg.Type.BR_BarcodeRead,msg.getDetails()));
                     break;
+                case BarcodeVerify:
+                    touchDisplayMBox.send(msg);
+                    break;
                 default:
                     log.warning(id + ": unknown message type: [" + msg + "]");
             }

@@ -66,12 +66,12 @@ public class SLSvrHandler extends HWHandler{
             String barcode = SLSvrGetProperty("SLSvr.Barcode"+i);
             if(barcode.equals(msg.getDetails())){
                 MBox touchDisplayMBox = appKickstarter.getThread("TouchDisplayHandler").getMBox();
-                touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.BarcodeVerify, ("Correct Barcode,"+barcode)));
+                slc.send(new Msg(id, mbox, Msg.Type.BarcodeVerify, ("Correct Barcode,"+barcode)));
                 return;
             }
         }
         MBox touchDisplayMBox = appKickstarter.getThread("TouchDisplayHandler").getMBox();
-        touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.BarcodeVerify, "wrong barcode"));
+        slc.send(new Msg(id, mbox, Msg.Type.BarcodeVerify, "wrong barcode"));
     }
 
     public String SLSvrGetProperty(String property) throws IOException {
