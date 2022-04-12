@@ -217,7 +217,7 @@ public class SLC extends AppThread {
             touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.CodeVerifyResult,  "pick up code correct! Verifying storage hours..." + MatchCabID));
             if (hours>24){//overtime fee payment
                 if(OctopusPaid.contains("Paid")){//octopus card successfully paid
-                    log.info(id + "please pick up your parcel at door:" + MatchCabID);
+                    log.info(id + "Successfully Paid! please pick up your parcel at door:" + MatchCabID);
                     touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.CodeVerifyResult,  "Successfully Paid! please pick up your parcel at door:" + MatchCabID));
                     CabinetGroup1.getCabinet(MatchCabID).setOpenStatus("open");
                     CabinetGroup1.getCabinet(MatchCabID).setOpenCode("null");
