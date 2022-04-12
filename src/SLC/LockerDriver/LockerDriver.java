@@ -19,8 +19,8 @@ public class LockerDriver extends HWHandler {
     // processMsg
     protected void processMsg(Msg msg) {
         switch (msg.getType()) {
-
-
+            case Terminate:
+                break;
             case LK_GoActive:
                 handleGoActive();
                 break;

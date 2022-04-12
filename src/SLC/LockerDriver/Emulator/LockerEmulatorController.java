@@ -73,34 +73,53 @@ public class LockerEmulatorController {
         this.aL=getLockerData();
         new Thread(() -> {
             while (true){
-                int i  = checkStatus();
-                if(i!=0){
-                    LockerEmulator.changeButtonColor(String.valueOf(i));
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
+                ArrayList <Integer> i  = checkStatus();
+
+                for(int j = 0 ; j < i.size(); j++){
+
+                    if(i.get(j)!=0){
+                        LockerEmulator.changeButtonColor(String.valueOf(j+1),"red");
+                    }else{
+                        LockerEmulator.changeButtonColor(String.valueOf(j+1),"null");
+                    }
+                }
+
             }
             // code goes here.
         }).start();
 
     } // initialize
+    //------------------------------------------------------------
+    // Terminate
+    public void terminate(){
 
+    }
     //------------------------------------------------------------
     // check locker status
-    public int checkStatus(){
+    public ArrayList<Integer> checkStatus(){
         String  status ;
         final int LockerSize = 10; //Need To be change to 40 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        ArrayList <Integer> lk = new ArrayList<Integer>();
         for(int i = 1 ; i <= LockerSize; i++){
             String lockerValue = "Lockers.Locker" + i;
             String lockerDetail = appKickstarter.getProperty(lockerValue);
             String [] detailSplit = lockerDetail.split("-");
             status = detailSplit[1];
             if (status.equals("open")){
-                return i;
+                lk.add(1);
+            }else{
+                lk.add(0);
             }
 
         }
 
+        return lk;
 
-        return 0;
     }
 
     //------------------------------------------------------------

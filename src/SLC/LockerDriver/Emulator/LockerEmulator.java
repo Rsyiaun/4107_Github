@@ -56,11 +56,16 @@ public class LockerEmulator extends LockerDriver {
     } // BarcodeReaderEmulator
     //------------------------------------------------------------
     // changeButtonColor
-    public static void changeButtonColor(String lockerId){
+    public static void changeButtonColor(String lockerId,String color){
         Scene scene = myStage.getScene();
         if (scene!=null){
         Button btn = (Button) scene.lookup("#"+lockerId);
-        btn.setStyle("-fx-background-color: red");
+            if (!color.equals("null")){btn.setStyle("-fx-background-color: " + color);
+
+            }else{
+                btn.setStyle("");
+            }
+
         }
     }
 
