@@ -64,6 +64,7 @@ public class SLC extends AppThread {
                     octCardReaderMBox.send(new Msg(id, mbox,Msg.Type.Poll,""));
                     touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.Poll, ""));
                     lockerMBox.send(new Msg(id, mbox, Msg.Type.Poll, ""));
+                    SLSvrMBox.send(new Msg(id, mbox, Msg.Type.Poll,""));
                     break;
 
                 case SysDiagnostic:
@@ -74,11 +75,11 @@ public class SLC extends AppThread {
 
                     break;
                 case PollAck:
-                    log.info("PollAck: " + msg.getDetails()+" Broken hardware need to be checked!");
+                    log.info("PollAck: " + msg.getDetails());
                     break;
 
                 case PollNak:
-                    log.info("PollNak: " + msg.getDetails());
+                    log.info("PollNak: " + msg.getDetails() + " Broken hardware need to be checked!");
                     break;
 
                 case Terminate:
