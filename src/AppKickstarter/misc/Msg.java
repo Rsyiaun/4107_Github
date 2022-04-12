@@ -109,7 +109,8 @@ public class Msg {
         /**Barcode Verify*/ BarcodeVerify,
         SysDiagnostic,
         SysShutdown,
-        SysRestart
+        SysRestart,
+        ReSysDiagnostic
 
     } // Type
 } // Msg

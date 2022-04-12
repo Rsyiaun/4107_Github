@@ -21,7 +21,10 @@ public class LockerEmulator extends LockerDriver {
     private String id;
     private static Stage myStage;
     private LockerEmulatorController lockerEmulatorController;
-
+    //Product Data
+    private static String currentVersion = "3.14";
+    private static String serialNumber = "PFAF0-99KMO-I0A5U-IJXHK-U1GPG";
+    
     //------------------------------------------------------------
     // LockerEmulator
     public LockerEmulator(String id, SLCStarter slcStarter) {
@@ -106,4 +109,9 @@ public class LockerEmulator extends LockerDriver {
                 break;
         }
     } // handlePoll
+
+    public static String handleDiagnostic() {
+
+        return "Current Version : "+currentVersion + " SerialNumber : " + serialNumber;
+    }
 } // BarcodeReaderEmulator

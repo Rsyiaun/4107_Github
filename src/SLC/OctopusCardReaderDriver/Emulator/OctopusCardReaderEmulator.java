@@ -20,7 +20,9 @@ public class OctopusCardReaderEmulator extends OctopusCardReaderDriver {
     private String id;
     private Stage myStage;
     private OctopusCardReaderEmulatorController octopusCardReaderEmulatorController;
-
+    //Product Data
+    private static String currentVersion = "3.14";
+    private static String serialNumber = "PFAF0-99KMO-I0A5U-IJXHK-U1GPG";
     //------------------------------------------------------------
     // OctopusCardReaderEmulator
     public OctopusCardReaderEmulator(String id, SLCStarter slcStarter) {
@@ -91,5 +93,20 @@ public class OctopusCardReaderEmulator extends OctopusCardReaderDriver {
                 break;
         }
     } // handlePoll
+
+    public void octopusCardPaid(Msg msg) {
+        if (msg.getType() == Msg.Type.OC_OctopusCardPaid) {
+            if (msg.getDetails().contains("Paid")) {
+                System.out.println("Octopus Card Successfully Paid!");
+                // NeedBarcodeMsg.setText("Correct Barcode!");
+            } else {
+                System.out.println("Payment Failed!");
+                // NeedBarcodeMsg.setText("Can't find barcode in System!");
+            }
+        }
+    }//Octopus Card Paid
+    public static String handleDiagnostic() {
+        return "Current Version : "+currentVersion + " SerialNumber : " + serialNumber;
+    }
 } // OctopusCardReaderEmulator
 

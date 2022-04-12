@@ -1,8 +1,10 @@
 package SLC.BarcodeReaderDriver;
 
+import SLC.BarcodeReaderDriver.Emulator.BarcodeReaderEmulator;
 import SLC.HWHandler.HWHandler;
 import AppKickstarter.AppKickstarter;
 import AppKickstarter.misc.*;
+import SLC.OctopusCardReaderDriver.Emulator.OctopusCardReaderEmulator;
 
 
 //======================================================================
@@ -18,7 +20,13 @@ public class BarcodeReaderDriver extends HWHandler {
     //------------------------------------------------------------
     // processMsg
     protected void processMsg(Msg msg) {
+        SLSvrMBox = appKickstarter.getThread("SLSvrHandler").getMBox();
         switch (msg.getType()) {
+            case SysDiagnostic:
+
+                SLSvrMBox.send(new Msg(id, mbox, Msg.Type.SysDiagnostic, "Barcode Reader " + System.lineSeparator() +  BarcodeReaderEmulator.handleDiagnostic()));
+
+                break;
             case BR_BarcodeRead:
                 slc.send(new Msg(id, mbox, Msg.Type.BR_BarcodeRead, msg.getDetails()));
                 break;

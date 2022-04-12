@@ -3,13 +3,11 @@ package SLC.OctopusCardReaderDriver;
 import SLC.HWHandler.HWHandler;
 import AppKickstarter.AppKickstarter;
 import AppKickstarter.misc.*;
-import javafx.scene.control.ChoiceBox;
+import SLC.OctopusCardReaderDriver.Emulator.OctopusCardReaderEmulator;
 
 import java.util.logging.Handler;
 
 public class OctopusCardReaderDriver extends HWHandler {
-
-    public ChoiceBox activationRespCBox;
     //------------------------------------------------------------
     // OctopusCardReaderDriver
     public OctopusCardReaderDriver(String id, AppKickstarter appKickstarter) {
@@ -20,8 +18,10 @@ public class OctopusCardReaderDriver extends HWHandler {
     //------------------------------------------------------------
     // processMsg
     protected void processMsg(Msg msg) {
+        SLSvrMBox = appKickstarter.getThread("SLSvrHandler").getMBox();
         switch (msg.getType()) {
             case SysDiagnostic:
+                SLSvrMBox.send(new Msg(id, mbox, Msg.Type.SysDiagnostic, "Octopus Card Reader "+ System.lineSeparator() +OctopusCardReaderEmulator.handleDiagnostic()));
 
                 break;
 
@@ -45,6 +45,8 @@ public class OctopusCardReaderDriver extends HWHandler {
                 log.warning(id + ": unknown message type: [" + msg + "]");
         }
     } // processMsg
+
+
 
 
     //------------------------------------------------------------
