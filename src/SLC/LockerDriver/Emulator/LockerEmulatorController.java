@@ -107,7 +107,7 @@ public class LockerEmulatorController {
     // check locker status
     public ArrayList<Integer> checkStatus(){
         Properties prop = new Properties();
-        String fileName = "etc/SLC.cfg"; //lockerFile
+        String fileName = "etc/Locker.cfg"; //lockerFile
         try (FileInputStream fis = new FileInputStream(fileName)) {
             prop.load(fis);
         } catch (FileNotFoundException ex) {

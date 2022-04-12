@@ -19,14 +19,14 @@ public class CabinetGroup {
             in.close();
             String s = cfgProps1.getProperty("Lockers.Locker"+String.valueOf(i));
             String [] sArray = cfgProps1.getProperty("Lockers.Locker"+String.valueOf(i)).split("-");
-            this.CabGroup.add((new Cabinet(String.valueOf(i),sArray[1],sArray[0],"",sArray[2])));
+            this.CabGroup.add((new Cabinet(String.valueOf(i),sArray[1],sArray[0],"",sArray[2],sArray[3])));
         }
     }
 
 
-    public String getEmptyID(){
+    public String getEmptyID(String size){
         for(int i=0;i<this.CabGroup.size();i++){
-            if(this.CabGroup.get(i).getOpenCode().equals("null")){
+            if((this.CabGroup.get(i).getOpenCode().equals("null"))&&(this.CabGroup.get(i).getSize().equals(size))){
                 return this.CabGroup.get(i).getID();
             }
         }

@@ -6,13 +6,15 @@ public class Cabinet {
     private String OpenCode;
     private String Barcode;
     private String StoreTime;
+    private String Size;
 
-    public Cabinet(String ID, String OpenStatus, String OpenCode, String Barcode,String storeTime) {
+    public Cabinet(String ID, String OpenStatus, String OpenCode, String Barcode,String storeTime,String size) {
         this.CabinetID = ID;
         this.OpenStatus = OpenStatus;
         this.OpenCode = OpenCode;
         this.Barcode = Barcode;
         this.StoreTime = StoreTime;
+        this.Size=size;
     }
 
     public String getID() {
@@ -49,6 +51,10 @@ public class Cabinet {
 
     public String getStoreTime() {
         return this.StoreTime;
+    }
+
+    public String getSize(){
+        return this.Size;
     }
 
 }

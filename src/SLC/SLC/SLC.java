@@ -137,7 +137,7 @@ public class SLC extends AppThread {
     //------------------------------------------------------------
     // processButtonClicked
     private void processButtonClicked(Msg msg) throws IOException {
-        if (msg.getDetails().contains("Request StoreParcel")) {
+        if (msg.getDetails().contains("Correct Barcode")) {
             String str = "0123456789";
             Random random = new Random();
             StringBuffer sb = new StringBuffer();
@@ -146,8 +146,9 @@ public class SLC extends AppThread {
                 sb.append(str.charAt(number));
             }
             String pickUpCode = sb.toString();
-            String EmptyCabinetID = CabinetGroup1.getEmptyID();
             String[] msgArray = msg.getDetails().split(",");
+            String EmptyCabinetID = CabinetGroup1.getEmptyID(msgArray[2]);
+
             if (EmptyCabinetID != null) {
                 CabinetGroup1.getCabinet(EmptyCabinetID).setOpenCode(pickUpCode);
                 CabinetGroup1.getCabinet(EmptyCabinetID).setOpenStatus("open");
@@ -155,7 +156,7 @@ public class SLC extends AppThread {
                 touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.PickupCodeMsg, "pickup code: "+pickUpCode+", LockerID:"+EmptyCabinetID));
                 Timestamp currentTime = new Timestamp(System.currentTimeMillis());
                 String StoreTime = String.valueOf(currentTime.getTime());
-                setLockerProperty(EmptyCabinetID,StoreTime,pickUpCode,"open");
+                setLockerProperty(EmptyCabinetID,StoreTime,pickUpCode,"open",msgArray[2]);
                 log.info(id + ": success generate a pickup code, please put your parcel in the door:" + EmptyCabinetID);
             } else {
                 touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.PickupCodeMsg, "full"));
@@ -164,14 +165,14 @@ public class SLC extends AppThread {
         }
     } // processButtonClicked
 
-    public void setLockerProperty(String lockerID,String time,String pickupCode,String openStatus) throws IOException {
+    public void setLockerProperty(String lockerID,String time,String pickupCode,String openStatus,String size) throws IOException {
         Properties cfgProps1 = null;
         cfgProps1 = new Properties();
         FileInputStream in = new FileInputStream("etc/Locker.cfg");
         cfgProps1.load(in);
         in.close();
         String lockerKey = "Lockers.Locker"+lockerID;
-       String refreshProperty = pickupCode+"-"+openStatus+"-"+time;
+       String refreshProperty = pickupCode+"-"+openStatus+"-"+time+"-"+size;
         System.out.println(refreshProperty);
         Object s = cfgProps1.setProperty(lockerKey,refreshProperty);
         FileOutputStream out = new FileOutputStream("etc/Locker.cfg");
@@ -189,10 +190,11 @@ public class SLC extends AppThread {
             CabinetGroup1.getCabinet(MatchCabID).setOpenStatus("open");
             CabinetGroup1.getCabinet(MatchCabID).setOpenCode("null");
             CabinetGroup1.getCabinet(MatchCabID).setBarcode("null");
+           String size= CabinetGroup1.getCabinet(MatchCabID).getSize();
             touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.CodeVerifyResult,  "pick up code correct! please pick up your parcel at door:" + MatchCabID));
             Timestamp currentTime = new Timestamp(System.currentTimeMillis());
             String PickTime = String.valueOf(currentTime.getTime());
-            setLockerProperty(MatchCabID,PickTime,"null","open");
+            setLockerProperty(MatchCabID,"null","null","open",size);
 
         }else{
             log.info(id+":Wrong pick up code, please try again!");

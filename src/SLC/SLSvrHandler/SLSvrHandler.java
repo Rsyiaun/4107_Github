@@ -67,18 +67,17 @@ public class SLSvrHandler extends HWHandler{
     protected void CheckBarcode(Msg msg) throws IOException {
         System.out.println("This is SLSvr, now start verify barcode...");
         int Num = Integer.parseInt(SLSvrGetProperty("SLSvr.NumOfBarcode"));
+        Properties cfgProps1 = null;
+        cfgProps1 = new Properties();
+        FileInputStream in = new FileInputStream("etc/SLSVr.cfg");
+        cfgProps1.load(in);
+        in.close();
         for(int i=1;i<=Num;i++){
-            String barcode = SLSvrGetProperty("SLSvr.Barcode"+i);
-            if(barcode.equals(msg.getDetails())){
-                MBox touchDisplayMBox = appKickstarter.getThread("TouchDisplayHandler").getMBox();
-                slc.send(new Msg(id, mbox, Msg.Type.BarcodeVerify, ("Correct Barcode,"+barcode)));
-                Properties cfgProps1 = null;
-                cfgProps1 = new Properties();
-                FileInputStream in = new FileInputStream("etc/SLSVr.cfg");
-                cfgProps1.load(in);
-                in.close();
+            String[] array = SLSvrGetProperty("SLSvr.Barcode"+i).split("-");
+            if((array[0]+"-"+array[1]).equals(msg.getDetails())){
                 String BarcodeToDelete = "SLSvr.Barcode"+i;
-                Object s = cfgProps1.setProperty(BarcodeToDelete,"null");
+                slc.send(new Msg(id, mbox, Msg.Type.BarcodeVerify, ("Correct Barcode,"+array[0]+"-"+array[1]+","+array[2])));
+                Object s = cfgProps1.setProperty(BarcodeToDelete,"null-"+array[2]);
                 FileOutputStream out = new FileOutputStream("etc/SLSvr.cfg");
                 cfgProps1.store(out,"update barcode data");
                 if (s == null) {

@@ -169,8 +169,8 @@ public class TouchDisplayEmulator extends TouchDisplayHandler {
     private Label CodeGenerateMsg;
     // if Barcode is right, this method will be called
     @FXML
-    public void td_StoreBtnClick(String barcode) {
-        String BtnMsg = "Request StoreParcel,"+barcode;
+    public void td_StoreBtnClick(Msg msg) {
+        String BtnMsg = msg.getDetails();
         log.fine(id + ": Button clicked: -- (" + BtnMsg + ")");
         MBox touchDisplayMBox = appKickstarter.getThread("TouchDisplayHandler").getMBox();
         touchDisplayMBox.send(new Msg(id, touchDisplayMBox, Msg.Type.TD_ButtonClicked, BtnMsg));
@@ -238,7 +238,7 @@ public class TouchDisplayEmulator extends TouchDisplayHandler {
         if (msg.getType() == Msg.Type.BarcodeVerify){
             if(msg.getDetails().contains("Correct Barcode")){
                 String[] msgArray = msg.getDetails().split(",");
-                td_StoreBtnClick(msgArray[1]);
+                td_StoreBtnClick(msg);
                 System.out.println("Correct Barcode!");
                // NeedBarcodeMsg.setText("Correct Barcode!");
             }else if(msg.getDetails().equals("wrong barcode")){
