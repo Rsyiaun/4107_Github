@@ -40,6 +40,12 @@ public class SLC extends AppThread {
         SLSvrMBox = appKickstarter.getThread("SLSvrHandler").getMBox();
 
 
+
+
+
+
+
+
         for (boolean quit = false; !quit; ) {
             Msg msg = mbox.receive();
 
@@ -57,7 +63,6 @@ public class SLC extends AppThread {
                     barcodeReaderMBox.send(new Msg(id, mbox, Msg.Type.Poll, ""));
                     touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.Poll, ""));
                     lockerMBox.send(new Msg(id, mbox, Msg.Type.Poll, ""));
-                    SLSvrMBox.send(new Msg(id, mbox, Msg.Type.Poll, ""));
                     break;
                 case Diagnostic:
 
@@ -80,7 +85,7 @@ public class SLC extends AppThread {
                     processCodeVerify(msg);
                     break;
                 case BR_BarcodeRead:
-                   System.out.println("SLC got the Barcode form emulator,sending to SLSvr...");
+                    System.out.println("SLC got the Barcode form emulator,sending to SLSvr...");
                     SLSvrMBox.send(new Msg(id,mbox,Msg.Type.BR_BarcodeRead,msg.getDetails()));
                     break;
                 default:
@@ -103,8 +108,7 @@ public class SLC extends AppThread {
     //------------------------------------------------------------
     // processButtonClicked
     private void processButtonClicked(Msg msg) {
-        if (msg.getDetails().contains("Request StoreParcel")) {
-            String[] msgArray = msg.getDetails().split(",");
+        if (msg.getDetails().equals("Request StoreParcel!")) {
             String str = "0123456789";
             Random random = new Random();
             StringBuffer sb = new StringBuffer();
@@ -117,8 +121,7 @@ public class SLC extends AppThread {
             if (EmptyCabinetID != null) {
                 CabinetGroup1.getCabinet(EmptyCabinetID).setOpenCode(pickUpCode);
                 CabinetGroup1.getCabinet(EmptyCabinetID).setEmptyStatus(false);
-                CabinetGroup1.getCabinet(EmptyCabinetID).setBarcode(msgArray[1]);
-                touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.PickupCodeMsg, "pickup code: " + pickUpCode + ", LockerID:" + EmptyCabinetID));
+                touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.PickupCodeMsg, "pickup code: "+pickUpCode+", LockerID:"+EmptyCabinetID));
                 log.info(id + ": success generate a pickup code, please put your parcel in the door:" + EmptyCabinetID);
             } else {
                 touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.PickupCodeMsg, "full"));
@@ -132,12 +135,13 @@ public class SLC extends AppThread {
         if (MatchCabID != null) {
             log.info(id + ": pick up code correct! please pick up your parcel at door:" + MatchCabID);
             CabinetGroup1.getCabinet(MatchCabID).setEmptyStatus(true);
-            touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.CodeVerifyResult, "pick up code correct! please pick up your parcel at door:" + MatchCabID));
-        } else {
-            log.info(id + ":Wrong pick up code, please try again!");
-            touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.CodeVerifyResult, "Wrong pick up code, please try again!"));
+            touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.CodeVerifyResult,  "pick up code correct! please pick up your parcel at door:" + MatchCabID));
+        }else{
+            log.info(id+":Wrong pick up code, please try again!");
+            touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.CodeVerifyResult,"Wrong pick up code, please try again!"));
         }
     }
+
 
 
 } // SLC
