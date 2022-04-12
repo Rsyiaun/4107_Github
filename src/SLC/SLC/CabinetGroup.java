@@ -6,8 +6,8 @@ public class CabinetGroup {
     private ArrayList<Cabinet> CabGroup = new ArrayList<Cabinet>();
 
     public CabinetGroup(){
-        for(int i=0;i<40;i++){
-            this.CabGroup.add((new Cabinet("A"+i,true,"","")));
+        for(int i=1;i<=40;i++){
+            this.CabGroup.add((new Cabinet(String.valueOf(i),true,"null","","null")));
         }
     }
 

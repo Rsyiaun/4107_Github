@@ -4,6 +4,11 @@ import AppKickstarter.AppKickstarter;
 import AppKickstarter.misc.*;
 import AppKickstarter.timer.Timer;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.sql.Timestamp;
+import java.util.Properties;
 import java.util.Random;
 
 
@@ -41,11 +46,6 @@ public class SLC extends AppThread {
 
 
 
-
-
-
-
-
         for (boolean quit = false; !quit; ) {
             Msg msg = mbox.receive();
 
@@ -78,11 +78,19 @@ public class SLC extends AppThread {
 
                 case TD_ButtonClicked:
                     log.info("ButtonCLicked: " + msg.getDetails());
-                    processButtonClicked(msg);
+                    try {
+                        processButtonClicked(msg);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                     break;
                 case CodeToVerify:
                     log.info("SLC receive customer's pickup code,start verify...");
-                    processCodeVerify(msg);
+                    try {
+                        processCodeVerify(msg);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                     break;
                 case BR_BarcodeRead:
                     System.out.println("SLC got the Barcode form emulator,sending to SLSvr...");
@@ -107,8 +115,8 @@ public class SLC extends AppThread {
 
     //------------------------------------------------------------
     // processButtonClicked
-    private void processButtonClicked(Msg msg) {
-        if (msg.getDetails().equals("Request StoreParcel!")) {
+    private void processButtonClicked(Msg msg) throws IOException {
+        if (msg.getDetails().contains("Request StoreParcel")) {
             String str = "0123456789";
             Random random = new Random();
             StringBuffer sb = new StringBuffer();
@@ -118,10 +126,15 @@ public class SLC extends AppThread {
             }
             String pickUpCode = sb.toString();
             String EmptyCabinetID = CabinetGroup1.getEmptyID();
+            String[] msgArray = msg.getDetails().split(",");
             if (EmptyCabinetID != null) {
                 CabinetGroup1.getCabinet(EmptyCabinetID).setOpenCode(pickUpCode);
                 CabinetGroup1.getCabinet(EmptyCabinetID).setEmptyStatus(false);
+                CabinetGroup1.getCabinet(EmptyCabinetID).setBarcode(msgArray[1]);
                 touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.PickupCodeMsg, "pickup code: "+pickUpCode+", LockerID:"+EmptyCabinetID));
+                Timestamp currentTime = new Timestamp(System.currentTimeMillis());
+                String StoreTime = String.valueOf(currentTime.getTime());
+                setLockerProperty(EmptyCabinetID,StoreTime,pickUpCode,"open");
                 log.info(id + ": success generate a pickup code, please put your parcel in the door:" + EmptyCabinetID);
             } else {
                 touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.PickupCodeMsg, "full"));
@@ -130,12 +143,33 @@ public class SLC extends AppThread {
         }
     } // processButtonClicked
 
-    private void processCodeVerify(Msg msg) {
+    public void setLockerProperty(String lockerID,String time,String pickupCode,String openStatus) throws IOException {
+        Properties cfgProps1 = null;
+        cfgProps1 = new Properties();
+        FileInputStream in = new FileInputStream("etc/SLC.cfg");
+        cfgProps1.load(in);
+        in.close();
+        String lockerKey = "Lockers.Locker"+lockerID;
+       String refreshProperty = pickupCode+"-"+openStatus+"-"+time;
+        System.out.println(refreshProperty);
+        Object s = cfgProps1.setProperty(lockerKey,refreshProperty);
+        System.out.println(s);
+        FileOutputStream out = new FileOutputStream("etc/SLC.cfg");
+        cfgProps1.store(out,"update locker data");
+        if (s == null) {
+            log.severe(id + ": getProperty(" + s + ") failed.  Check the config file etc/SLSvr.cfg!");
+        }
+    } // setProperty
+
+    private void processCodeVerify(Msg msg) throws IOException {
         String MatchCabID = CabinetGroup1.findMatchCabinet(msg.getDetails());
         if (MatchCabID != null) {
             log.info(id + ": pick up code correct! please pick up your parcel at door:" + MatchCabID);
             CabinetGroup1.getCabinet(MatchCabID).setEmptyStatus(true);
             touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.CodeVerifyResult,  "pick up code correct! please pick up your parcel at door:" + MatchCabID));
+            Timestamp currentTime = new Timestamp(System.currentTimeMillis());
+            String PickTime = String.valueOf(currentTime.getTime());
+            setLockerProperty(MatchCabID,PickTime,"null","open");
         }else{
             log.info(id+":Wrong pick up code, please try again!");
             touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.CodeVerifyResult,"Wrong pick up code, please try again!"));
