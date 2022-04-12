@@ -189,7 +189,7 @@ public class SLC extends AppThread {
         if (MatchCabID != null) {
 
             Cabinet cabinet = CabinetGroup1.getCabinet(MatchCabID);
-            Timestamp storageTime = Timestamp.valueOf(cabinet.getStoreTime());
+            Timestamp storageTime = new Timestamp(Long.valueOf(cabinet.getStoreTime()));
             Timestamp currentTime = new Timestamp(System.currentTimeMillis());
             Long hours = (currentTime.getTime()-storageTime.getTime()  ) / 1000/60/60 ;
 
