@@ -9,6 +9,7 @@ import SLC.OctopusCardReaderDriver.Emulator.OctopusCardReaderEmulator;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.util.Properties;
 
 
@@ -29,7 +30,7 @@ public class LockerDriver extends HWHandler {
         switch (msg.getType()) {
             case SysDiagnostic:
                 Properties prop = new Properties();
-                String fileName = "SLC.config"; //lockerFile
+                String fileName = "etc/Locker.cfg"; //lockerFile
                 try (FileInputStream fis = new FileInputStream(fileName)) {
                     prop.load(fis);
                 } catch (FileNotFoundException ex) {
@@ -37,14 +38,28 @@ public class LockerDriver extends HWHandler {
                 } catch (IOException ex) {
 
                 }
+                String lockerStatus="";
+                for(int i= 1 ; i<= Integer.parseInt(prop.getProperty("Lockers.NumOfLocker")); i++){
+                    String [] value = prop.getProperty("Lockers.Locker"+String.valueOf(i)).split("-");
 
-                System.out.println(prop.getProperty("app.name"));
-                System.out.println(prop.getProperty("app.version"));
+                    if (value[2].equals("null") ){
+                        lockerStatus += i + "                        " + value[0] + "           " + value[1]  +"               " + "null" + System.lineSeparator() ;
+
+                    }else{
+                        Timestamp storageTime = new Timestamp(Long.valueOf(value[2]));
+                        Timestamp currentTime = new Timestamp(System.currentTimeMillis());
+                        Long hours = (currentTime.getTime()-storageTime.getTime()  ) / 1000/60/60 ;
+                        lockerStatus += i + "                        " + value[0] + "           " + value[1]  +"               " + hours + System.lineSeparator() ;
+                    }
+
+                }
+
 
 
                 SLSvrMBox.send(new Msg(id, mbox, Msg.Type.SysDiagnostic, "Locker " + System.lineSeparator() +  LockerEmulator.handleDiagnostic() + System.lineSeparator() +
-                "Locker status" + System.lineSeparator()
-
+                "Locker status" + System.lineSeparator()+
+                "Locker ID              PickUp Code          Status        Storage Time(Hour/s)" + System.lineSeparator()
+                +lockerStatus
                 ));
 
                 break;

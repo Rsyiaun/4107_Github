@@ -107,7 +107,7 @@ public class LockerEmulatorController {
     // check locker status
     public ArrayList<Integer> checkStatus(){
         Properties prop = new Properties();
-        String fileName = "etc/SLC.cfg"; //lockerFile
+        String fileName = "etc/Locker.cfg"; //lockerFile
         try (FileInputStream fis = new FileInputStream(fileName)) {
             prop.load(fis);
         } catch (FileNotFoundException ex) {
@@ -237,12 +237,22 @@ public class LockerEmulatorController {
         String  storageTime;
         String  status ;
         int  id;
-        final int LockerSize = 10; //Need To be change to 40 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-        ArrayList <Lockers> aL = new ArrayList<>();
 
+        ArrayList <Lockers> aL = new ArrayList<>();
+        Properties prop = new Properties();
+        String fileName = "etc/Locker.cfg"; //lockerFile
+        try (FileInputStream fis = new FileInputStream(fileName)) {
+            prop.load(fis);
+        } catch (FileNotFoundException ex) {
+            System.out.println("not found");
+            // FileNotFoundException catch is optional and can be collapsed
+        } catch (IOException ex) {
+
+        }
+        final int LockerSize = Integer.parseInt(prop.getProperty("Lockers.NumOfLocker"));
         for(int i = 1 ; i <= LockerSize; i++){
             String lockerValue = "Lockers.Locker" + i;
-            String lockerDetail = appKickstarter.getProperty(lockerValue);
+            String lockerDetail = prop.getProperty(lockerValue);
             String [] detailSplit = lockerDetail.split("-");
             accessCode = detailSplit[0]; status = detailSplit[1]; storageTime = (detailSplit[2]); id = i-1;
             Lockers lk = new Lockers(accessCode, status,  storageTime, id );
