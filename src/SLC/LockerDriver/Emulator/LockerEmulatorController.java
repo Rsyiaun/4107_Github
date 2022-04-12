@@ -103,9 +103,9 @@ public class LockerEmulatorController {
     // check locker status
     public ArrayList<Integer> checkStatus(){
         String  status ;
-        final int LockerSize = 10; //Need To be change to 40 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        final String LockerSize = appKickstarter.getProperty("Lockers.NumOfLocker"); //Need To be change to 40 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         ArrayList <Integer> lk = new ArrayList<Integer>();
-        for(int i = 1 ; i <= LockerSize; i++){
+        for(int i = 1 ; i <= Integer.parseInt(LockerSize); i++){
             String lockerValue = "Lockers.Locker" + i;
             String lockerDetail = appKickstarter.getProperty(lockerValue);
             String [] detailSplit = lockerDetail.split("-");
