@@ -20,7 +20,9 @@ public class OctopusCardReaderEmulator extends OctopusCardReaderDriver {
     private String id;
     private Stage myStage;
     private OctopusCardReaderEmulatorController octopusCardReaderEmulatorController;
-
+    //Product Data
+    private static String currentVersion = "3.14";
+    private static String serialNumber = "PFAF0-99KMO-I0A5U-IJXHK-U1GPG";
     //------------------------------------------------------------
     // OctopusCardReaderEmulator
     public OctopusCardReaderEmulator(String id, SLCStarter slcStarter) {
