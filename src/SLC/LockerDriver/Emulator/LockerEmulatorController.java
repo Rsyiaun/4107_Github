@@ -6,19 +6,18 @@ import AppKickstarter.misc.Msg;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.Properties;
 import java.util.logging.Logger;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 
 
 //======================================================================
@@ -165,7 +164,7 @@ public class LockerEmulatorController {
 
     //------------------------------------------------------------
     // Show detail while locker button got clicked
-    public void lockerOnClickHandler(ActionEvent actionEvent){
+    public void lockerOnClickHandler(ActionEvent actionEvent) throws IOException {
 
         Button btn = (Button) actionEvent.getSource();
         int id  = Integer.parseInt(btn.getText());
@@ -180,8 +179,40 @@ public class LockerEmulatorController {
             appendTextArea("Locker: " + id + "  Access Code: "+lk.accessCode + "     Status: " + lk.status + "  Storage Time: " + "null" + " hour/s");
         }
 
-    }
+        if(!btn.getStyle().equals("")){
+            Alert a = new Alert(Alert.AlertType.NONE);
+            // set alert type
+            a.setAlertType(Alert.AlertType.CONFIRMATION);
 
+            a.setContentText("Close the Door?");
+            // show the dialog
+            Optional<ButtonType> result = a.showAndWait();
+            if (result.get() == ButtonType.OK){
+                setLockerProperty(String.valueOf(id), lk.storageTime, lk.accessCode, "close");
+                // ... user chose OK
+            } else {
+                // ... user chose CANCEL or closed the dialog
+            }
+        }
+
+    }
+    public void setLockerProperty(String lockerID,String time,String pickupCode,String openStatus) throws IOException {
+        Properties cfgProps1 = null;
+        cfgProps1 = new Properties();
+        FileInputStream in = new FileInputStream("etc/Locker.cfg");
+        cfgProps1.load(in);
+        in.close();
+        String lockerKey = "Lockers.Locker"+lockerID;
+        String refreshProperty = pickupCode+"-"+openStatus+"-"+time;
+        System.out.println(refreshProperty);
+        Object s = cfgProps1.setProperty(lockerKey,refreshProperty);
+        System.out.println(s);
+        FileOutputStream out = new FileOutputStream("etc/Locker.cfg");
+        cfgProps1.store(out,"update locker data");
+        if (s == null) {
+            log.severe(id + ": getProperty(" + s + ") failed.  Check the config file etc/SLSvr.cfg!");
+        }
+    } // setProperty
     //------------------------------------------------------------
     // getters
     public String getActivationResp() { return activationResp; }
