@@ -29,7 +29,6 @@ public class SLSvrEmulator extends SLSvrHandler {
     private SLCStarter slcStarter;
     private String id;
     private Stage myStage;
-    private MBox SLSvrMBox;
     private SLSvrEmulatorController SLSvrEmulatorController;
 
     //------------------------------------------------------------

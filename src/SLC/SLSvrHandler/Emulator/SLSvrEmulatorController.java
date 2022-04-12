@@ -4,14 +4,19 @@ import AppKickstarter.AppKickstarter;
 import AppKickstarter.misc.MBox;
 import AppKickstarter.misc.Msg;
 import SLC.BarcodeReaderDriver.Emulator.BarcodeReaderEmulator;
+import SLC.LockerDriver.Emulator.LockerEmulatorController;
+import SLC.SLC.SLC;
 import SLC.TouchDisplayHandler.Emulator.TouchDisplayEmulator;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.event.ActionEvent;
+import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 
+import java.sql.Timestamp;
 import java.util.logging.Logger;
 
 public class SLSvrEmulatorController {
@@ -22,6 +27,7 @@ public class SLSvrEmulatorController {
     private MBox SLSvrMBox;
     private String selectedScreen;
     private String pollResp;
+    private MBox slc ;
     public ChoiceBox screenSwitcherCBox;
     public ChoiceBox pollRespCBox;
 
@@ -63,6 +69,8 @@ public class SLSvrEmulatorController {
             }
         });
         this.selectedScreen = screenSwitcherCBox.getValue().toString();
+        slc = appKickstarter.getThread("SLC").getMBox();
+
 
     } // initialize
 
@@ -79,7 +87,25 @@ public class SLSvrEmulatorController {
         return pollResp;
     } // getPollResp
 
+    //------------------------------------------------------------
+    // buttonOnClickHandler
+    public void buttonOnClickHandler(ActionEvent actionEvent){
+        Button btn = (Button) actionEvent.getSource();
+        switch (btn.getText()){
+            case "System Diagnostic":
+                slc.send(new Msg(id,SLSvrMBox, Msg.Type.SysDiagnostic, ""));
+                break;
+            case "System ShutDown":
+                slc.send(new Msg(id,SLSvrMBox, Msg.Type.SysShutdown, ""));
+                break;
+            case "System Restart":
+                slc.send(new Msg(id,SLSvrMBox, Msg.Type.SysRestart, ""));
+                break;
+        }
 
+
+
+    }
     //------------------------------------------------------------
     // td_mouseClick
     public void td_mouseClick(MouseEvent mouseEvent) {

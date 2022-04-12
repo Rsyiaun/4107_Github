@@ -18,6 +18,10 @@ public class OctopusCardReaderDriver extends HWHandler {
     // processMsg
     protected void processMsg(Msg msg) {
         switch (msg.getType()) {
+            case SysDiagnostic:
+
+                break;
+
             case OC_OctopusCardRead:
                 slc.send(new Msg(id, mbox, Msg.Type.OC_OctopusCardRead, msg.getDetails()));
                 break;

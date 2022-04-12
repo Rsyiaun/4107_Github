@@ -41,6 +41,7 @@ public class TouchDisplayEmulator extends TouchDisplayHandler {
 	super(id, slcStarter);
 	this.slcStarter = slcStarter;
 	this.id = id;
+
     } // TouchDisplayEmulator
 
 
