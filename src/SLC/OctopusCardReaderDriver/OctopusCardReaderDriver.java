@@ -3,10 +3,13 @@ package SLC.OctopusCardReaderDriver;
 import SLC.HWHandler.HWHandler;
 import AppKickstarter.AppKickstarter;
 import AppKickstarter.misc.*;
+import javafx.scene.control.ChoiceBox;
 
 import java.util.logging.Handler;
 
 public class OctopusCardReaderDriver extends HWHandler {
+
+    public ChoiceBox activationRespCBox;
     //------------------------------------------------------------
     // OctopusCardReaderDriver
     public OctopusCardReaderDriver(String id, AppKickstarter appKickstarter) {

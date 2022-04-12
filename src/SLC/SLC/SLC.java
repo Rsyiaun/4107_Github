@@ -174,7 +174,7 @@ public class SLC extends AppThread {
 
     private void processCodeVerify(Msg msg) throws IOException {
         String MatchCabID = CabinetGroup1.findMatchCabinet(msg.getDetails());
-        if (MatchCabID != null) {
+        if (MatchCabID != null) { //octopus paid status
             log.info(id + ": pick up code correct! please pick up your parcel at door:" + MatchCabID);
             CabinetGroup1.getCabinet(MatchCabID).setEmptyStatus(true);
             touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.CodeVerifyResult,  "pick up code correct! please pick up your parcel at door:" + MatchCabID));
