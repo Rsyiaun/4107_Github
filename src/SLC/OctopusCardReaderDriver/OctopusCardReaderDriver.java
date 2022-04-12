@@ -3,13 +3,11 @@ package SLC.OctopusCardReaderDriver;
 import SLC.HWHandler.HWHandler;
 import AppKickstarter.AppKickstarter;
 import AppKickstarter.misc.*;
-import javafx.scene.control.ChoiceBox;
+import SLC.OctopusCardReaderDriver.Emulator.OctopusCardReaderEmulator;
 
 import java.util.logging.Handler;
 
 public class OctopusCardReaderDriver extends HWHandler {
-
-    public ChoiceBox activationRespCBox;
     //------------------------------------------------------------
     // OctopusCardReaderDriver
     public OctopusCardReaderDriver(String id, AppKickstarter appKickstarter) {
@@ -20,9 +18,11 @@ public class OctopusCardReaderDriver extends HWHandler {
     //------------------------------------------------------------
     // processMsg
     protected void processMsg(Msg msg) {
+        SLSvrMBox = appKickstarter.getThread("SLSvrHandler").getMBox();
         switch (msg.getType()) {
             case SysDiagnostic:
-                System.out.println();
+                SLSvrMBox.send(new Msg(id, mbox, Msg.Type.SysDiagnostic, "Octopus Card Reader "+ System.lineSeparator() +OctopusCardReaderEmulator.handleDiagnostic()));
+
                 break;
 
             case OC_OctopusCardRead:
@@ -30,8 +30,7 @@ public class OctopusCardReaderDriver extends HWHandler {
                 break;
 
             case OC_OctopusCardPaid:
-                octopusCardPaid(msg);
-                //slc.send(new Msg(id, mbox, Msg.Type.OC_OctopusCardPaid, msg.getDetails()));
+                slc.send(new Msg(id, mbox, Msg.Type.OC_OctopusCardPaid, msg.getDetails()));
                 break;
 
             case OC_GoActive:
@@ -46,6 +45,8 @@ public class OctopusCardReaderDriver extends HWHandler {
                 log.warning(id + ": unknown message type: [" + msg + "]");
         }
     } // processMsg
+
+
 
 
     //------------------------------------------------------------
@@ -67,9 +68,4 @@ public class OctopusCardReaderDriver extends HWHandler {
     protected void handlePoll() {
         log.info(id + ": Handle Poll");
     } // handlePoll
-
-    //------------------------------------------------------------
-    // Octopus Card Paid
-    protected void octopusCardPaid(Msg msg){log.info(id+":Octopus payment status:"+msg.getDetails());}
-
 } // OctopusCardReaderDriver

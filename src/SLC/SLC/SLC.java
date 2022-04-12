@@ -75,6 +75,7 @@ public class SLC extends AppThread {
                     octCardReaderMBox.send(new Msg(id, mbox, Msg.Type.SysDiagnostic, ""));
 
                     break;
+
                 case PollAck:
                     log.info("PollAck: " + msg.getDetails());
                     break;

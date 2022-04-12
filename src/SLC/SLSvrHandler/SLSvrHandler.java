@@ -22,6 +22,10 @@ public class SLSvrHandler extends HWHandler{
     // processMsg
     protected void processMsg(Msg msg) throws IOException {
         switch (msg.getType()) {
+            case SysDiagnostic:
+
+                System.out.println(msg.getDetails());
+                break;
             case BR_BarcodeRead:
                 CheckBarcode(msg);
                 break;

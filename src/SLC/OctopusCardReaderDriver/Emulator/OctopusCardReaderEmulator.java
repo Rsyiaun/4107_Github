@@ -103,25 +103,8 @@ public class OctopusCardReaderEmulator extends OctopusCardReaderDriver {
             }
         }
     }//Octopus Card Paid
-
-    //------------------------------------------------------------
-    // handleDiagnostic
-    protected void handleDiagnostic() {
-
-
-        switch (octopusCardReaderEmulatorController.getPollResp()) {
-            case "ACK":
-                System.out.println();
-                break;
-
-            case "NAK":
-                slc.send(new Msg(id, mbox, Msg.Type.PollNak, id + " is down!"));
-                break;
-
-            case "Ignore":
-                // Just ignore.  do nothing!!
-                break;
-        }
-    } // handleDiagnostic
+    public static String handleDiagnostic() {
+        return "Current Version : "+currentVersion + " SerialNumber : " + serialNumber;
+    }
 } // OctopusCardReaderEmulator
 

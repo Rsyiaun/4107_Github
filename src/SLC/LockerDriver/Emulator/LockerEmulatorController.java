@@ -81,12 +81,8 @@ public class LockerEmulatorController {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                ArrayList <Integer> i  = null;
-                try {
-                    i = checkStatus();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+
+                ArrayList <Integer> i  = checkStatus();
 
                 for(int j = 0 ; j < i.size(); j++){
 
@@ -109,18 +105,25 @@ public class LockerEmulatorController {
     }
     //------------------------------------------------------------
     // check locker status
-    public ArrayList<Integer> checkStatus() throws IOException {
+    public ArrayList<Integer> checkStatus(){
+        Properties prop = new Properties();
+        String fileName = "etc/SLC.cfg"; //lockerFile
+        try (FileInputStream fis = new FileInputStream(fileName)) {
+            prop.load(fis);
+        } catch (FileNotFoundException ex) {
+            System.out.println("not found");
+            // FileNotFoundException catch is optional and can be collapsed
+        } catch (IOException ex) {
+
+        }
+
+
         String  status ;
-        Properties cfgProps1 = null;
-        cfgProps1 = new Properties();
-        FileInputStream in = new FileInputStream("etc/Locker.cfg");
-        cfgProps1.load(in);
-        in.close();
-        final String LockerSize =cfgProps1.getProperty("Lockers.NumOfLocker"); //Need To be change to 40 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        final String LockerSize = prop.getProperty("Lockers.NumOfLocker"); //Need To be change to 40 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         ArrayList <Integer> lk = new ArrayList<Integer>();
         for(int i = 1 ; i <= Integer.parseInt(LockerSize); i++){
             String lockerValue = "Lockers.Locker" + i;
-            String lockerDetail = cfgProps1.getProperty(lockerValue);
+            String lockerDetail = prop.getProperty(lockerValue);
             String [] detailSplit = lockerDetail.split("-");
             status = detailSplit[1];
             if (status.equals("open")){
@@ -229,22 +232,17 @@ public class LockerEmulatorController {
     }
     //------------------------------------------------------------
     // Generate a arraylist of locker var
-    public ArrayList<Lockers> getLockerData() throws IOException {
+    public ArrayList<Lockers> getLockerData(){
         String  accessCode ;
         String  storageTime;
         String  status ;
         int  id;
-        final int LockerSize = 40; //Need To be change to 40 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        final int LockerSize = 10; //Need To be change to 40 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         ArrayList <Lockers> aL = new ArrayList<>();
 
-        Properties cfgProps1 = null;
-        cfgProps1 = new Properties();
-        FileInputStream in = new FileInputStream("etc/Locker.cfg");
-        cfgProps1.load(in);
-        in.close();
         for(int i = 1 ; i <= LockerSize; i++){
             String lockerValue = "Lockers.Locker" + i;
-            String lockerDetail =  cfgProps1.getProperty(lockerValue);
+            String lockerDetail = appKickstarter.getProperty(lockerValue);
             String [] detailSplit = lockerDetail.split("-");
             accessCode = detailSplit[0]; status = detailSplit[1]; storageTime = (detailSplit[2]); id = i-1;
             Lockers lk = new Lockers(accessCode, status,  storageTime, id );

@@ -1,8 +1,10 @@
 package SLC.TouchDisplayHandler;
 
+import SLC.BarcodeReaderDriver.Emulator.BarcodeReaderEmulator;
 import SLC.HWHandler.HWHandler;
 import AppKickstarter.AppKickstarter;
 import AppKickstarter.misc.*;
+import SLC.TouchDisplayHandler.Emulator.TouchDisplayEmulator;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
@@ -22,7 +24,13 @@ public class TouchDisplayHandler extends HWHandler {
     //------------------------------------------------------------
     // processMsg
     protected void processMsg(Msg msg) {
+        SLSvrMBox = appKickstarter.getThread("SLSvrHandler").getMBox();
         switch (msg.getType()) {
+            case SysDiagnostic:
+
+                SLSvrMBox.send(new Msg(id, mbox, Msg.Type.SysDiagnostic, "TouchDisplay " + System.lineSeparator()+TouchDisplayEmulator.handleDiagnostic()));
+
+                break;
             case TD_MouseClicked:
                 slc.send(new Msg(id, mbox, Msg.Type.TD_MouseClicked, msg.getDetails()));
                 break;
@@ -51,6 +59,8 @@ public class TouchDisplayHandler extends HWHandler {
                 log.warning(id + ": unknown message type: [" + msg + "]");
         }
     } // processMsg
+
+
 
 
     //------------------------------------------------------------

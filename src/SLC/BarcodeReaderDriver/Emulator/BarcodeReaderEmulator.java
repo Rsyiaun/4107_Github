@@ -21,7 +21,8 @@ public class BarcodeReaderEmulator extends BarcodeReaderDriver {
     private Stage myStage;
     private BarcodeReaderEmulatorController barcodeReaderEmulatorController;
     //Product Data
-    private String currentVersion = "1.01", serialNumber = "g5W5Q23C5x";
+    private static String currentVersion = "1.01";
+    private static String serialNumber = "JZEVZ-W46HW-X3A6R-2ES62-UGNNM";
     //------------------------------------------------------------
     // BarcodeReaderEmulator
     public BarcodeReaderEmulator(String id, SLCStarter slcStarter) {
@@ -91,4 +92,9 @@ public class BarcodeReaderEmulator extends BarcodeReaderDriver {
                 break;
         }
     } // handlePoll
+
+    public static String handleDiagnostic() {
+
+        return "Current Version : "+currentVersion + " SerialNumber : " + serialNumber;
+    }
 } // BarcodeReaderEmulator

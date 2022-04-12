@@ -34,7 +34,9 @@ public class TouchDisplayEmulator extends TouchDisplayHandler {
     private String id;
     private Stage myStage;
     private TouchDisplayEmulatorController touchDisplayEmulatorController;
-
+    //Product Data
+    private static String currentVersion = "8.96";
+    private static String serialNumber = "JG8MF-9JQEE-5VEU2-CZB24-MEC8L";
     //------------------------------------------------------------
     // TouchDisplayEmulator
     public TouchDisplayEmulator(String id, SLCStarter slcStarter) throws Exception {
@@ -43,6 +45,11 @@ public class TouchDisplayEmulator extends TouchDisplayHandler {
 	this.id = id;
 
     } // TouchDisplayEmulator
+
+    public static String handleDiagnostic() {
+
+        return "Current Version : "+currentVersion + " SerialNumber : " + serialNumber;
+    }
 
 
     //------------------------------------------------------------

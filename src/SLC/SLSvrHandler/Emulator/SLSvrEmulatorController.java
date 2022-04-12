@@ -94,6 +94,7 @@ public class SLSvrEmulatorController {
         switch (btn.getText()){
             case "System Diagnostic":
                 slc.send(new Msg(id,SLSvrMBox, Msg.Type.SysDiagnostic, ""));
+                System.out.println("System Diagnostic Report-------------------------------------------");
                 break;
             case "System ShutDown":
                 slc.send(new Msg(id,SLSvrMBox, Msg.Type.SysShutdown, ""));
