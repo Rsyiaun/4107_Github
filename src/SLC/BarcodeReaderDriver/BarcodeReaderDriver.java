@@ -38,7 +38,10 @@ public class BarcodeReaderDriver extends HWHandler {
             case BR_GoStandby:
                 handleGoStandby();
                 break;
-
+            case SysShutdown:
+                appKickstarter.unregThread(this);
+                log.info(id + ": terminating...");
+                break;
             default:
                 log.warning(id + ": unknown message type: [" + msg + "]");
         }

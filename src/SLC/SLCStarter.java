@@ -84,16 +84,16 @@ public class SLCStarter extends AppKickstarter {
     //------------------------------------------------------------
     // stopApp
     public void stopApp() {
-	log.info("");
-	log.info("");
-	log.info("============================================================");
-	log.info(id + ": Application Stopping...");
-	slc.getMBox().send(new Msg(id, null, Msg.Type.Terminate, "Terminate now!"));
-	barcodeReaderDriver.getMBox().send(new Msg(id, null, Msg.Type.Terminate, "Terminate now!"));
-	octopusReaderDriver.getMBox().send(new Msg(id, null, Msg.Type.Terminate, "Terminate now!"));
-	touchDisplayHandler.getMBox().send(new Msg(id, null, Msg.Type.Terminate, "Terminate now!"));
-	lockerDriver.getMBox().send(new Msg(id, null, Msg.Type.Terminate, "Terminate now!"));
-	timer.getMBox().send(new Msg(id, null, Msg.Type.Terminate, "Terminate now!"));
-	slsvrHandler.getMBox().send(new Msg(id,null,Msg.Type.Terminate,"Terminate now!"));
+//	log.info("");
+//	log.info("");
+//	log.info("============================================================");
+//	log.info(id + ": Application Stopping...");
+//
+//	barcodeReaderDriver.getMBox().send(new Msg(id, null, Msg.Type.Terminate, "Terminate now!"));
+//	octopusReaderDriver.getMBox().send(new Msg(id, null, Msg.Type.Terminate, "Terminate now!"));
+//	touchDisplayHandler.getMBox().send(new Msg(id, null, Msg.Type.Terminate, "Terminate now!"));
+//	lockerDriver.getMBox().send(new Msg(id, null, Msg.Type.Terminate, "Terminate now!"));
+//	timer.getMBox().send(new Msg(id, null, Msg.Type.Terminate, "Terminate now!"));
+//	slsvrHandler.getMBox().send(new Msg(id,null,Msg.Type.Terminate,"Terminate now!"));
     } // stopApp
 } // SLCStarter

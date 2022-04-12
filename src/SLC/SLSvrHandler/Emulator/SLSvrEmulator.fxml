@@ -19,9 +19,9 @@
         <AnchorPane prefHeight="480.0" prefWidth="640.0" AnchorPane.leftAnchor="20" AnchorPane.topAnchor="20">
             <children>
                 <Rectangle arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="480.0" layoutX="1.0" layoutY="1.0" onMouseClicked="#td_mouseClick" stroke="BLACK" strokeType="OUTSIDE" width="640" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
-            <Button layoutX="240.0" layoutY="157.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#buttonOnClickHandler" prefHeight="42.0" prefWidth="162.0" text="System Diagnostic" />
-            <Button layoutX="240.0" layoutY="220.0" mnemonicParsing="false" onAction="#buttonOnClickHandler" prefHeight="42.0" prefWidth="162.0" text="System ShutDown" />
-            <Button layoutX="240.0" layoutY="284.0" mnemonicParsing="false" onAction="#buttonOnClickHandler" prefHeight="42.0" prefWidth="162.0" text="System Restart" />
+                <Button layoutX="240.0" layoutY="157.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#buttonOnClickHandler" prefHeight="42.0" prefWidth="162.0" text="System Diagnostic" />
+                <Button layoutX="240.0" layoutY="220.0" mnemonicParsing="false" onAction="#buttonOnClickHandler" prefHeight="42.0" prefWidth="162.0" text="System ShutDown" />
+                <Button layoutX="240.0" layoutY="284.0" mnemonicParsing="false" onAction="#buttonOnClickHandler" prefHeight="42.0" prefWidth="162.0" text="System Restart" />
             </children>
         </AnchorPane>
         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#d7d7d7" height="50.0" stroke="TRANSPARENT" strokeType="INSIDE" width="680.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />

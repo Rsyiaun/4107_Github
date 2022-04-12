@@ -55,6 +55,10 @@ public class TouchDisplayHandler extends HWHandler {
             case BarcodeVerify:
                 GetBarcodeChecked(msg);
                 break;
+            case SysShutdown:
+                appKickstarter.unregThread(this);
+                log.info(id + ": terminating...");
+                break;
             default:
                 log.warning(id + ": unknown message type: [" + msg + "]");
         }
@@ -90,6 +94,7 @@ log.info(id+":SLSvr already checked the barcode:"+msg.getDetails());
     public void ShowPickUpCodeMsg(Msg msg) {
     }
     void ShowCodeVerifyResult(Msg msg) {
+
    System.out.println("receive Barcode checking result from server: "+msg.getDetails());
     }
 } // TouchDisplayHandler

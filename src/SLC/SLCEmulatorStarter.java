@@ -96,7 +96,6 @@ public class SLCEmulatorStarter extends SLCStarter {
 	} // start
     } // Emulators
 
-
     //------------------------------------------------------------
     //  setters
     private void setTimer(Timer timer) {

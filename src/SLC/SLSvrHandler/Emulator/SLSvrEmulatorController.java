@@ -100,6 +100,9 @@ public class SLSvrEmulatorController {
                 slc.send(new Msg(id,SLSvrMBox, Msg.Type.SysShutdown, ""));
                 break;
             case "System Restart":
+                if(slc == null){
+                    System.out.println("cannot access to SLC");
+                }
                 slc.send(new Msg(id,SLSvrMBox, Msg.Type.SysRestart, ""));
                 break;
         }

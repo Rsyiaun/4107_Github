@@ -3,6 +3,7 @@ package SLC.SLC;
 import AppKickstarter.AppKickstarter;
 import AppKickstarter.misc.*;
 import AppKickstarter.timer.Timer;
+import SLC.LockerDriver.Emulator.LockerEmulatorController;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -115,6 +116,7 @@ public class SLC extends AppThread {
                     break;
 
                 case OC_OctopusCardPaid:
+                    octCardReaderMBox.send(msg);
                     break;
 
                 default:
@@ -187,19 +189,19 @@ public class SLC extends AppThread {
 
         if (MatchCabID != null) {
 
-            Cabinet cabinet = CabinetGroup1.getCabinet(MatchCabID);
-            Timestamp storageTime = Timestamp.valueOf(cabinet.getStoreTime());
+            Cabinet cabinet = CabinetGroup1.getCabinet(MatchCabID);//match cabinet
+            Timestamp storageTime = new Timestamp(Long.valueOf(cabinet.getStoreTime()));//get cabinet storage tme
             Timestamp currentTime = new Timestamp(System.currentTimeMillis());
-            Long hours = (currentTime.getTime() - storageTime.getTime()) / 1000 / 60 / 60;
+            Long hours = (currentTime.getTime()-storageTime.getTime()  ) / 1000/60/60 ;//calculate storage hours
 
             String OctopusPaid = String.valueOf(octCardReaderMBox.receive());
 
             log.info(id + ": pick up code correct! Verifying storage hours...");
-            touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.CodeVerifyResult, "pick up code correct! Verifying storage hours..." + MatchCabID));
-            if (hours > 24) {
-                if (OctopusPaid.contains("Paid")) {
+            touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.CodeVerifyResult,  "pick up code correct! Verifying storage hours..." + MatchCabID));
+            if (hours>24){
+                if(OctopusPaid.contains("Paid")){
                     log.info(id + "please pick up your parcel at door:" + MatchCabID);
-                    touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.CodeVerifyResult, "Successfully Paid! please pick up your parcel at door:" + MatchCabID));
+                    touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.CodeVerifyResult,  "Successfully Paid! please pick up your parcel at door:" + MatchCabID));
                     CabinetGroup1.getCabinet(MatchCabID).setOpenStatus("open");
                     CabinetGroup1.getCabinet(MatchCabID).setOpenCode("null");
                     CabinetGroup1.getCabinet(MatchCabID).setBarcode("null-null");
@@ -210,9 +212,10 @@ public class SLC extends AppThread {
                     log.info(id + ": Please pay the overtime fee by Octopus Card!");
                     touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.OC_OctopusCardPaid, "Please pay the overtime fee by Octopus Card!" + MatchCabID));
                 }
-            } else {
+            }
+            else{
                 log.info(id + "please pick up your parcel at door:" + MatchCabID);
-                touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.CodeVerifyResult, "Please pick up your parcel at door:" + MatchCabID));
+                touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.CodeVerifyResult,  "Please pick up your parcel at door:" + MatchCabID));
                 CabinetGroup1.getCabinet(MatchCabID).setOpenStatus("open");
                 CabinetGroup1.getCabinet(MatchCabID).setOpenCode("null");
                 CabinetGroup1.getCabinet(MatchCabID).setBarcode("null");
@@ -221,9 +224,12 @@ public class SLC extends AppThread {
                 setLockerProperty(MatchCabID, PickTime, "null", "open", size);
             }
 
-
+        }else{
+            log.info(id+":Wrong pick up code, please try again!");
+            touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.CodeVerifyResult,"Wrong pick up code, please try again!"));
         }
-
-
     }
+
+
+
 } // SLC
