@@ -30,7 +30,8 @@ public class OctopusCardReaderDriver extends HWHandler {
                 break;
 
             case OC_OctopusCardPaid:
-                slc.send(new Msg(id, mbox, Msg.Type.OC_OctopusCardPaid, msg.getDetails()));
+                octopusCardPaid(msg);
+                //slc.send(new Msg(id, mbox, Msg.Type.OC_OctopusCardPaid, msg.getDetails()));
                 break;
 
             case OC_GoActive:
@@ -66,4 +67,9 @@ public class OctopusCardReaderDriver extends HWHandler {
     protected void handlePoll() {
         log.info(id + ": Handle Poll");
     } // handlePoll
+
+    //------------------------------------------------------------
+    // Octopus Card Paid
+    protected void octopusCardPaid(Msg msg){log.info(id+":Octopus payment status:"+msg.getDetails());}
+
 } // OctopusCardReaderDriver

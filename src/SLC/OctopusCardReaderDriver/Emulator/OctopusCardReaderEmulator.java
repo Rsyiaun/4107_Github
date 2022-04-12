@@ -91,5 +91,18 @@ public class OctopusCardReaderEmulator extends OctopusCardReaderDriver {
                 break;
         }
     } // handlePoll
+
+    public void octopusCardPaid(Msg msg) {
+        if (msg.getType() == Msg.Type.OC_OctopusCardPaid) {
+            if (msg.getDetails().contains("Paid")) {
+                System.out.println("Octopus Card Successfully Paid!");
+                // NeedBarcodeMsg.setText("Correct Barcode!");
+            } else {
+                System.out.println("Payment Failed!");
+                // NeedBarcodeMsg.setText("Can't find barcode in System!");
+            }
+        }
+    }//Octopus Card Paid
+
 } // OctopusCardReaderEmulator
 

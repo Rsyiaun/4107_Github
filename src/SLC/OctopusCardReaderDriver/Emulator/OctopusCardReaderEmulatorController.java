@@ -149,4 +149,5 @@ public class OctopusCardReaderEmulatorController {
     public void appendTextArea(String status) {
         octopusCardReaderTextArea.appendText(status+"\n");
     } // appendTextArea
+
 } // OctopusCardReaderEmulatorController

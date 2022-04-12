@@ -107,9 +107,14 @@ public class SLC extends AppThread {
                     System.out.println("SLC got the Barcode form emulator,sending to SLSvr...");
                     SLSvrMBox.send(new Msg(id,mbox,Msg.Type.BR_BarcodeRead,msg.getDetails()));
                     break;
+
                 case BarcodeVerify:
                     touchDisplayMBox.send(msg);
                     break;
+
+                case OC_OctopusCardPaid:
+                    break;
+
                 default:
                     log.warning(id + ": unknown message type: [" + msg + "]");
             }
@@ -179,6 +184,7 @@ public class SLC extends AppThread {
         String MatchCabID = CabinetGroup1.findMatchCabinet(msg.getDetails());
         if (MatchCabID != null) { //octopus paid status
             log.info(id + ": pick up code correct! please pick up your parcel at door:" + MatchCabID);
+            //if(msg.getDetails().contains("Paid")){}
             CabinetGroup1.getCabinet(MatchCabID).setOpenStatus("open");
             CabinetGroup1.getCabinet(MatchCabID).setOpenCode("null");
             CabinetGroup1.getCabinet(MatchCabID).setBarcode("null");
