@@ -68,6 +68,7 @@ public class SLC extends AppThread {
                     break;
 
                 case SysDiagnostic:
+
                     barcodeReaderMBox.send(new Msg(id, mbox, Msg.Type.SysDiagnostic, ""));
                     touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.SysDiagnostic, ""));
                     lockerMBox.send(new Msg(id, mbox, Msg.Type.SysDiagnostic, ""));

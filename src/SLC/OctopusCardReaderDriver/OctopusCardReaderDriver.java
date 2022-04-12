@@ -22,7 +22,7 @@ public class OctopusCardReaderDriver extends HWHandler {
     protected void processMsg(Msg msg) {
         switch (msg.getType()) {
             case SysDiagnostic:
-
+                System.out.println();
                 break;
 
             case OC_OctopusCardRead:

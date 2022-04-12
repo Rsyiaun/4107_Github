@@ -20,7 +20,8 @@ public class BarcodeReaderEmulator extends BarcodeReaderDriver {
     private String id;
     private Stage myStage;
     private BarcodeReaderEmulatorController barcodeReaderEmulatorController;
-
+    //Product Data
+    private String currentVersion = "1.01", serialNumber = "g5W5Q23C5x";
     //------------------------------------------------------------
     // BarcodeReaderEmulator
     public BarcodeReaderEmulator(String id, SLCStarter slcStarter) {
