@@ -184,7 +184,7 @@ public class TouchDisplayEmulator extends TouchDisplayHandler {
                 System.out.println("Your pickupcode: "+msg.getDetails());
                 System.out.println("Here's the pickup code please remember!");
                 System.out.println("Door is open, please put the package into it");
-               // GeneratedCode.setText(msg.getDetails());
+               //GeneratedCode.setText(msg.getDetails());
                 //CodeGenerateMsg.setText("Here's the pickup code please remember!");
                // DoorOpenRemind.setText("Door is open, please put the package into it");
             } else if (msg.getDetails().equals("full")) {

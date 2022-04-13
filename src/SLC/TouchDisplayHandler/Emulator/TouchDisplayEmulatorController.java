@@ -90,7 +90,7 @@ public class TouchDisplayEmulatorController {
     public void td_mouseClick(MouseEvent mouseEvent) {
         int x = (int) mouseEvent.getX();
         int y = (int) mouseEvent.getY();
-
+        sendPickupCode.setText("");
         log.fine(id + ": mouse clicked: -- (" + x + ", " + y + ")");
         touchDisplayMBox.send(new Msg(id, touchDisplayMBox, Msg.Type.TD_MouseClicked, x + " " + y));
     } // td_mouseClick
@@ -107,7 +107,7 @@ public class TouchDisplayEmulatorController {
     @FXML
     private TextField InputPickupCode;
     @FXML
-    private Label CodeVerifyResult;
+    private Label sendPickupCode;
     //td_CodeInputOK, check if the pickup Code that customer input is correct
     @FXML
     public void td_CodeInputOK() {
@@ -116,6 +116,7 @@ public class TouchDisplayEmulatorController {
         log.info(id + " sending pickup code: " + code + " to verify...");
         touchDisplayMBox.send(new Msg(id, touchDisplayMBox, Msg.Type.CodeToVerify, code));
         log.info(id+": verify message sent...");
+        sendPickupCode.setText("verifying pickup code,please wait...");
         // Msg msg = touchDisplayMBox.receive();
     }
 
