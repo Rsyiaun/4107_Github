@@ -78,14 +78,7 @@ public class SLSvrHandler extends HWHandler{
         for(int i=1;i<=Num;i++){
             String[] array = SLSvrGetProperty("SLSvr.Barcode"+i).split("-");
             if((array[0]+"-"+array[1]).equals(msg.getDetails())){
-                String BarcodeToDelete = "SLSvr.Barcode"+i;
                 slc.send(new Msg(id, mbox, Msg.Type.BarcodeVerify, ("Correct Barcode,"+array[0]+"-"+array[1]+","+array[2])));
-                Object s = cfgProps1.setProperty(BarcodeToDelete,"null-null"+array[2]);
-                FileOutputStream out = new FileOutputStream("etc/SLSvr.cfg");
-                cfgProps1.store(out,"update barcode data");
-                if (s == null) {
-                    log.severe(id + ": getProperty(" + s + ") failed.  Check the config file etc/SLSvr.cfg!");
-                }
                 return;
             }
         }

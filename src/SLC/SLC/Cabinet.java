@@ -13,7 +13,7 @@ public class Cabinet {
         this.OpenStatus = OpenStatus;
         this.OpenCode = OpenCode;
         this.Barcode = Barcode;
-        this.StoreTime = StoreTime;
+        this.StoreTime = storeTime;
         this.Size=size;
     }
 

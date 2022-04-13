@@ -158,6 +158,7 @@ public class SLC extends AppThread {
                 touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.PickupCodeMsg, "pickup code: "+pickUpCode+", LockerID:"+EmptyCabinetID));
                 Timestamp currentTime = new Timestamp(System.currentTimeMillis());
                 String StoreTime = String.valueOf(currentTime.getTime());
+                CabinetGroup1.getCabinet(EmptyCabinetID).setStoreTime(StoreTime);
                 setLockerProperty(EmptyCabinetID,StoreTime,pickUpCode,"open",msgArray[2]);
                 log.info(id + ": success generate a pickup code, please put your parcel in the door:" + EmptyCabinetID);
             } else {
@@ -188,7 +189,7 @@ public class SLC extends AppThread {
         String MatchCabID = CabinetGroup1.findMatchCabinet(msg.getDetails());
 
         if (MatchCabID != null) {
-
+System.out.println("check codeee");
             Cabinet cabinet = CabinetGroup1.getCabinet(MatchCabID);//match cabinet
             Timestamp storageTime = new Timestamp(Long.valueOf(cabinet.getStoreTime()));//get cabinet storage tme
             Timestamp currentTime = new Timestamp(System.currentTimeMillis());
@@ -208,20 +209,54 @@ public class SLC extends AppThread {
                     String size = CabinetGroup1.getCabinet(MatchCabID).getSize();
                     String PickTime = String.valueOf(currentTime.getTime());
                     setLockerProperty(MatchCabID, "null", "null", "open", size);
-                } else {
+
+                    Properties cfgProps1 = null;
+                    cfgProps1 = new Properties();
+                    FileInputStream in = new FileInputStream("etc/SLSVr.cfg");
+                    cfgProps1.load(in);
+                    in.close();
+                    int Num = Integer.parseInt(cfgProps1.getProperty("SLSvr.NumOfBarcode"));
+                    for(int i=1;i<=Num;i++){
+                        String[] array = cfgProps1.getProperty("SLSvr.Barcode"+i).split("-");
+                        if((array[0]+"-"+array[1]).equals(msg.getDetails())){
+                            String BarcodeToDelete = "SLSvr.Barcode"+i;
+                            Object s = cfgProps1.setProperty(BarcodeToDelete,"null-"+array[2]);
+                            if (s == null) {
+                                log.severe(id + ": getProperty(" + s + ") failed.  Check the config file etc/SLSvr.cfg!");
+                            }
+                            return;
+                        }
+                    }
                     log.info(id + ": Please pay the overtime fee by Octopus Card!");
                     touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.OC_OctopusCardPaid, "Please pay the overtime fee by Octopus Card!" + MatchCabID));
                 }
             }
             else{
                 log.info(id + "please pick up your parcel at door:" + MatchCabID);
-                touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.CodeVerifyResult,  "Please pick up your parcel at door:" + MatchCabID));
+                touchDisplayMBox.send(new Msg(id, mbox, Msg.Type.CodeVerifyResult,  "Successfully Paid! please pick up your parcel at door:" + MatchCabID));
                 CabinetGroup1.getCabinet(MatchCabID).setOpenStatus("open");
                 CabinetGroup1.getCabinet(MatchCabID).setOpenCode("null");
-                CabinetGroup1.getCabinet(MatchCabID).setBarcode("null");
+                CabinetGroup1.getCabinet(MatchCabID).setBarcode("null-null");
                 String size = CabinetGroup1.getCabinet(MatchCabID).getSize();
                 String PickTime = String.valueOf(currentTime.getTime());
-                setLockerProperty(MatchCabID, PickTime, "null", "open", size);
+                setLockerProperty(MatchCabID, "null", "null", "open", size);
+                Properties cfgProps1 = null;
+                cfgProps1 = new Properties();
+                FileInputStream in = new FileInputStream("etc/SLSVr.cfg");
+                cfgProps1.load(in);
+                in.close();
+                int Num = Integer.parseInt(cfgProps1.getProperty("SLSvr.NumOfBarcode"));
+                for(int i=1;i<=Num;i++){
+                    String[] array = cfgProps1.getProperty("SLSvr.Barcode"+i).split("-");
+                    if((array[0]+"-"+array[1]).equals(msg.getDetails())){
+                        String BarcodeToDelete = "SLSvr.Barcode"+i;
+                        Object s = cfgProps1.setProperty(BarcodeToDelete,"null-"+array[2]);
+                        if (s == null) {
+                            log.severe(id + ": getProperty(" + s + ") failed.  Check the config file etc/SLSvr.cfg!");
+                        }
+                        return;
+                    }
+                }
             }
 
         }else{
