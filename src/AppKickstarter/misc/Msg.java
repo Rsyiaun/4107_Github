@@ -110,6 +110,10 @@ public class Msg {
         SysDiagnostic,
         SysShutdown,
         SysRestart,
+        Login,
+        Logout,
+        AdminVerify,
+        lockerinfo,
         ReSysDiagnostic
 
     } // Type

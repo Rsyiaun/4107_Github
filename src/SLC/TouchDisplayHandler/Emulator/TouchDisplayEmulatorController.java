@@ -6,12 +6,11 @@ import AppKickstarter.misc.Msg;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.control.TextField;
+import javafx.scene.control.TextArea;
 
 import java.util.logging.Logger;
 
@@ -126,5 +125,27 @@ public class TouchDisplayEmulatorController {
         NeedBarcodeMsg.setText("Please scan the Barcode of the package first!");
         // Msg msg = touchDisplayMBox.receive();
     }
+    @FXML private TextArea infoShow;
+    @FXML private TextField AdminName;
+    @FXML private TextField AdminPassword;
+    @FXML public void td_LoginClicked(){
+        touchDisplayMBox.send(new Msg(id,touchDisplayMBox,Msg.Type.Login,AdminName.getText()+","+AdminPassword.getText()));
+        MBox touchDisplayMBox1 = appKickstarter.getThread("TouchDisplayHandler").getMBox();
+        //Msg msg = touchDisplayMBox1.receive();
+       // if(msg.getType().equals(Msg.Type.lockerinfo)){
+            //if(msg.getDetails().equals("true Admin")) {
+              //  infoShow.setText(msg.getDetails());
+          //  }else if(msg.getDetails().equals("Fake Admin")){
+            //   infoShow.setText("visit deny");
+         //   }
+      //  }
+   }
+
+    @FXML public void td_LogoutClicked(){
+        infoShow.setText("");
+    }
+
+
+
 
 } // TouchDisplayEmulatorController

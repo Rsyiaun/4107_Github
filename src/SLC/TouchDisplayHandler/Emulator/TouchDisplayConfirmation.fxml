@@ -1,23 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.shape.Rectangle?>
+<?import java.lang.*?>
+<?import javafx.collections.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
 
-<?import javafx.scene.shape.Line?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ChoiceBox?>
-<?import javafx.collections.FXCollections?>
-<?import java.lang.String?>
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="520.0" prefWidth="680.0" xmlns="http://javafx.com/javafx/8.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="SLC.TouchDisplayHandler.Emulator.TouchDisplayEmulatorController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="520.0" prefWidth="680.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="SLC.TouchDisplayHandler.Emulator.TouchDisplayEmulatorController">
     <children>
         <AnchorPane prefHeight="480.0" prefWidth="640.0" AnchorPane.leftAnchor="20" AnchorPane.topAnchor="20">
             <children>
-                <Rectangle arcHeight="5.0" arcWidth="5.0" AnchorPane.bottomAnchor="50" AnchorPane.leftAnchor="100" fill="white" height="40.0" stroke="BLACK" strokeType="OUTSIDE" width="160.0" />
-                <Rectangle arcHeight="5.0" arcWidth="5.0" AnchorPane.bottomAnchor="50" AnchorPane.rightAnchor="100" fill="white" height="40.0" stroke="BLACK" strokeType="OUTSIDE" width="160.0" />
-                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="480.0" onMouseClicked="#td_mouseClick" stroke="BLACK" strokeType="OUTSIDE" width="640" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.topAnchor="0" />
+                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="white" height="40.0" stroke="BLACK" strokeType="OUTSIDE" width="160.0" AnchorPane.bottomAnchor="50" AnchorPane.leftAnchor="100" />
+                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="white" height="40.0" stroke="BLACK" strokeType="OUTSIDE" width="160.0" AnchorPane.bottomAnchor="50" AnchorPane.rightAnchor="100" />
+                <Rectangle fx:id="SLCinfo" arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="480.0" layoutX="7.0" layoutY="1.0" onMouseClicked="#td_mouseClick" stroke="BLACK" strokeType="OUTSIDE" width="640" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="6.0" AnchorPane.topAnchor="0.0" />
+            <Label layoutX="227.0" prefHeight="71.0" prefWidth="188.0" text="Admin user login">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label layoutX="153.0" layoutY="64.0" prefHeight="25.0" prefWidth="55.0" text="Name:" />
+            <Label layoutX="138.0" layoutY="99.0" prefHeight="25.0" prefWidth="69.0" text="Password:" />
+            <TextField fx:id="AdminName" layoutX="222.0" layoutY="65.0" prefHeight="15.0" prefWidth="160.0" />
+            <TextField fx:id="AdminPassword" layoutX="222.0" layoutY="100.0" />
+            <Rectangle fx:id="Logout" arcHeight="5.0" arcWidth="5.0" fill="#1f93ff00" height="25.0" layoutX="235.0" layoutY="174.0" onMouseClicked="#td_LogoutClicked" stroke="BLACK" strokeType="INSIDE" width="128.0" />
+            <Label layoutX="264.0" layoutY="140.0" prefHeight="15.0" prefWidth="69.0" text="login" />
+            <Rectangle fx:id="Login" arcHeight="5.0" arcWidth="5.0" fill="#1f93ff00" height="25.0" layoutX="235.0" layoutY="136.0" onMouseClicked="#td_LoginClicked" stroke="BLACK" strokeType="INSIDE" width="128.0" />
+            <Label layoutX="262.0" layoutY="178.0" text="logout" />
+            <TextArea fx:id="InfoShow" layoutX="56.0" layoutY="205.0" prefHeight="236.0" prefWidth="491.0" />
             </children>
         </AnchorPane>
         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#d7d7d7" height="50.0" stroke="TRANSPARENT" strokeType="INSIDE" width="680.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
@@ -57,4 +67,3 @@
         </GridPane>
     </children>
 </AnchorPane>
-

@@ -42,6 +42,9 @@ public class SLSvrHandler extends HWHandler{
                 appKickstarter.unregThread(this);
                 log.info(id + ": terminating...");
                 break;
+            case Login:
+                VerifyUser(msg);
+                break;
             default:
                 log.warning(id + ": unknown message type: [" + msg + "]");
         }
@@ -98,5 +101,24 @@ public class SLSvrHandler extends HWHandler{
         }
         return s;
     } // getProperty
+
+    public  void  VerifyUser(Msg msg) throws IOException {
+        String[] msgArray = msg.getDetails().split(",");
+        Properties cfgProps1 = null;
+        cfgProps1 = new Properties();
+        FileInputStream in = new FileInputStream("etc/SLSvr.cfg");
+        cfgProps1.load(in);
+        in.close();
+        for(int i=1;i<=3;i++){
+            String property = "SLSvr.Admin"+i;
+            String[] userdata = property.split("-");
+            if(msgArray[0].equals(userdata[0])&&msgArray[1].equals(userdata[1])){
+                System.out.println("verify Admin user successful...");
+                slc.send(new Msg(id, mbox, Msg.Type.AdminVerify, "true Admin"));
+                return;
+            }
+        }
+        slc.send(new Msg(id, mbox, Msg.Type.AdminVerify, "Fake Admin"));
+    }
 
 }

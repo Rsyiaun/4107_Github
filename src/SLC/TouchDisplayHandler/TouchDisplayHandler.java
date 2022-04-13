@@ -9,6 +9,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
 import javax.swing.plaf.synth.SynthEditorPaneUI;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.Properties;
 
 
 //======================================================================
@@ -59,6 +62,13 @@ public class TouchDisplayHandler extends HWHandler {
                 appKickstarter.unregThread(this);
                 log.info(id + ": terminating...");
                 break;
+            case Login:
+                slc.send(msg);
+                log.info("try to login...");
+                break;
+            case AdminVerify:
+                System.out.println(msg.getDetails());
+                break;
             default:
                 log.warning(id + ": unknown message type: [" + msg + "]");
         }
@@ -97,4 +107,7 @@ log.info(id+":SLSvr already checked the barcode:"+msg.getDetails());
 
    System.out.println("receive Barcode checking result from server: "+msg.getDetails());
     }
+
+
+
 } // TouchDisplayHandler
