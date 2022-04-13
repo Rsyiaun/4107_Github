@@ -203,7 +203,8 @@ public class LockerEmulatorController {
         cfgProps1.load(in);
         in.close();
         String lockerKey = "Lockers.Locker"+lockerID;
-        String refreshProperty = pickupCode+"-"+openStatus+"-"+time;
+        String [] lockerData = cfgProps1.getProperty(lockerKey).split("-");
+        String refreshProperty = pickupCode+"-"+openStatus+"-"+time+"-"+lockerData[3];
         System.out.println(refreshProperty);
         Object s = cfgProps1.setProperty(lockerKey,refreshProperty);
         System.out.println(s);

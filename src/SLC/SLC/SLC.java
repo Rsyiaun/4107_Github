@@ -189,7 +189,6 @@ public class SLC extends AppThread {
         String MatchCabID = CabinetGroup1.findMatchCabinet(msg.getDetails());
 
         if (MatchCabID != null) {
-System.out.println("check codeee");
             Cabinet cabinet = CabinetGroup1.getCabinet(MatchCabID);//match cabinet
             Timestamp storageTime = new Timestamp(Long.valueOf(cabinet.getStoreTime()));//get cabinet storage tme
             Timestamp currentTime = new Timestamp(System.currentTimeMillis());

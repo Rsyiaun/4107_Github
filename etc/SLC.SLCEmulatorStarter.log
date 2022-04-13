@@ -1,58 +1,61 @@
-220413-08:27:48 [INFO] -- 
-220413-08:27:48 [INFO] -- 
-220413-08:27:48 [INFO] -- ============================================================
-220413-08:27:48 [INFO] -- SLCStarter: Application Starting...
-220413-08:27:50 [INFO] -- timer: starting...
-220413-08:27:50 [INFO] -- TouchDisplayHandler: starting...
-220413-08:27:50 [INFO] -- BarcodeReaderDriver: starting...
-220413-08:27:50 [INFO] -- OctopusCardReaderDriver: starting...
-220413-08:27:50 [INFO] -- SLSvrHandler: starting...
-220413-08:27:50 [INFO] -- LockerDriver: starting...
-220413-08:27:50 [INFO] -- SLC: starting...
-220413-08:27:50 [INFO] -- TouchDisplayHandler: loading fxml: TouchDisplayEmulator.fxml
-220413-08:27:50 [INFO] -- SLSvrHandler: loading fxml: SLSvrEmulator.fxml
-220413-08:27:56 [INFO] -- Poll: TimesUp 10117 0
-220413-08:27:56 [INFO] -- PollAck: LockerDriver is up!
-220413-08:27:56 [INFO] -- PollAck: TouchDisplayHandler is up!
-220413-08:27:56 [INFO] -- PollAck: OctopusCardReaderDriver is up!
-220413-08:27:56 [INFO] -- PollAck: SLSvrHandler is up!
-220413-08:27:56 [INFO] -- PollAck: BarcodeReaderDriver is up!
-220413-08:28:02 [INFO] -- Poll: TimesUp 38177 0
-220413-08:28:02 [INFO] -- PollAck: OctopusCardReaderDriver is up!
-220413-08:28:02 [INFO] -- PollAck: BarcodeReaderDriver is up!
-220413-08:28:02 [INFO] -- PollAck: TouchDisplayHandler is up!
-220413-08:28:02 [INFO] -- PollAck: SLSvrHandler is up!
-220413-08:28:02 [INFO] -- PollAck: LockerDriver is up!
-220413-08:28:03 [INFO] -- TouchDisplayHandler: update display -- MainMenu
-220413-08:28:03 [INFO] -- ButtonCLicked: Request PickParcel!
-220413-08:28:03 [INFO] -- TouchDisplayHandler: loading fxml: TouchDisplayMainMenu.fxml
-220413-08:28:08 [INFO] -- Poll: TimesUp 33803 0
-220413-08:28:08 [INFO] -- PollAck: OctopusCardReaderDriver is up!
-220413-08:28:08 [INFO] -- PollAck: TouchDisplayHandler is up!
-220413-08:28:08 [INFO] -- PollAck: SLSvrHandler is up!
-220413-08:28:08 [INFO] -- PollAck: BarcodeReaderDriver is up!
-220413-08:28:08 [INFO] -- PollAck: LockerDriver is up!
-220413-08:28:09 [INFO] -- TouchDisplayHandler sending pickup code: 862395 to verify...
-220413-08:28:09 [INFO] -- TouchDisplayHandler: verify message sent...
-220413-08:28:09 [INFO] -- SLC receive customer's pickup code,start verify...
-220413-08:28:36 [INFO] -- SLC: pick up code correct! Verifying storage hours...
-220413-08:28:36 [INFO] -- SLCplease pick up your parcel at door:22
-220413-08:28:36 [INFO] -- Poll: TimesUp 41646 0
-220413-08:28:36 [INFO] -- PollAck: BarcodeReaderDriver is up!
-220413-08:28:36 [INFO] -- PollAck: TouchDisplayHandler is up!
-220413-08:28:36 [INFO] -- PollAck: LockerDriver is up!
-220413-08:28:36 [INFO] -- PollAck: SLSvrHandler is up!
-220413-08:28:36 [WARNING] -- SLC: unknown message type: [OctopusCardReaderDriver (OC_OctopusCardRead) -- 83716851(5)]
-220413-08:28:36 [INFO] -- PollAck: OctopusCardReaderDriver is up!
-220413-08:28:42 [INFO] -- Poll: TimesUp 76561 0
-220413-08:28:42 [INFO] -- PollAck: BarcodeReaderDriver is up!
-220413-08:28:42 [INFO] -- PollAck: OctopusCardReaderDriver is up!
-220413-08:28:42 [INFO] -- PollAck: SLSvrHandler is up!
-220413-08:28:42 [INFO] -- PollAck: LockerDriver is up!
-220413-08:28:42 [INFO] -- PollAck: TouchDisplayHandler is up!
-220413-08:28:48 [INFO] -- Poll: TimesUp 21673 0
-220413-08:28:48 [INFO] -- PollAck: BarcodeReaderDriver is up!
-220413-08:28:48 [INFO] -- PollAck: SLSvrHandler is up!
-220413-08:28:48 [INFO] -- PollAck: LockerDriver is up!
-220413-08:28:48 [INFO] -- PollAck: OctopusCardReaderDriver is up!
-220413-08:28:48 [INFO] -- PollAck: TouchDisplayHandler is up!
+220413-09:45:32 [INFO] -- 
+220413-09:45:32 [INFO] -- 
+220413-09:45:32 [INFO] -- ============================================================
+220413-09:45:32 [INFO] -- SLCStarter: Application Starting...
+220413-09:45:34 [INFO] -- timer: starting...
+220413-09:45:34 [INFO] -- OctopusCardReaderDriver: starting...
+220413-09:45:34 [INFO] -- SLSvrHandler: starting...
+220413-09:45:34 [INFO] -- BarcodeReaderDriver: starting...
+220413-09:45:34 [INFO] -- TouchDisplayHandler: starting...
+220413-09:45:34 [INFO] -- LockerDriver: starting...
+220413-09:45:34 [INFO] -- TouchDisplayHandler: loading fxml: TouchDisplayEmulator.fxml
+220413-09:45:34 [INFO] -- SLC: starting...
+220413-09:45:35 [INFO] -- SLSvrHandler: loading fxml: SLSvrEmulator.fxml
+220413-09:45:40 [INFO] -- Poll: TimesUp 92812 0
+220413-09:45:40 [INFO] -- PollAck: TouchDisplayHandler is up!
+220413-09:45:40 [INFO] -- PollAck: SLSvrHandler is up!
+220413-09:45:40 [INFO] -- PollAck: LockerDriver is up!
+220413-09:45:40 [INFO] -- PollAck: OctopusCardReaderDriver is up!
+220413-09:45:40 [INFO] -- PollAck: BarcodeReaderDriver is up!
+220413-09:45:46 [INFO] -- Poll: TimesUp 22034 0
+220413-09:45:46 [INFO] -- PollAck: BarcodeReaderDriver is up!
+220413-09:45:46 [INFO] -- PollAck: OctopusCardReaderDriver is up!
+220413-09:45:46 [INFO] -- PollAck: TouchDisplayHandler is up!
+220413-09:45:46 [INFO] -- PollAck: LockerDriver is up!
+220413-09:45:46 [INFO] -- PollAck: SLSvrHandler is up!
+220413-09:45:52 [INFO] -- Poll: TimesUp 25549 0
+220413-09:45:52 [INFO] -- PollAck: BarcodeReaderDriver is up!
+220413-09:45:52 [INFO] -- PollAck: LockerDriver is up!
+220413-09:45:52 [INFO] -- PollAck: SLSvrHandler is up!
+220413-09:45:52 [INFO] -- PollAck: TouchDisplayHandler is up!
+220413-09:45:52 [INFO] -- PollAck: OctopusCardReaderDriver is up!
+220413-09:45:58 [INFO] -- Poll: TimesUp 77768 0
+220413-09:45:58 [INFO] -- PollAck: LockerDriver is up!
+220413-09:45:58 [INFO] -- PollAck: SLSvrHandler is up!
+220413-09:45:58 [INFO] -- PollAck: BarcodeReaderDriver is up!
+220413-09:45:58 [INFO] -- PollAck: TouchDisplayHandler is up!
+220413-09:45:58 [INFO] -- PollAck: OctopusCardReaderDriver is up!
+220413-09:46:04 [INFO] -- Poll: TimesUp 34811 0
+220413-09:46:04 [INFO] -- PollAck: BarcodeReaderDriver is up!
+220413-09:46:04 [INFO] -- PollAck: OctopusCardReaderDriver is up!
+220413-09:46:04 [INFO] -- PollAck: LockerDriver is up!
+220413-09:46:04 [INFO] -- PollAck: TouchDisplayHandler is up!
+220413-09:46:04 [INFO] -- PollAck: SLSvrHandler is up!
+220413-09:46:10 [INFO] -- Poll: TimesUp 54376 0
+220413-09:46:10 [INFO] -- PollAck: OctopusCardReaderDriver is up!
+220413-09:46:10 [INFO] -- PollAck: LockerDriver is up!
+220413-09:46:10 [INFO] -- PollAck: BarcodeReaderDriver is up!
+220413-09:46:10 [INFO] -- PollAck: SLSvrHandler is up!
+220413-09:46:10 [INFO] -- PollAck: TouchDisplayHandler is up!
+220413-09:46:16 [INFO] -- Poll: TimesUp 64210 0
+220413-09:46:16 [INFO] -- PollAck: SLSvrHandler is up!
+220413-09:46:16 [INFO] -- PollAck: OctopusCardReaderDriver is up!
+220413-09:46:16 [INFO] -- PollAck: TouchDisplayHandler is up!
+220413-09:46:16 [INFO] -- PollAck: LockerDriver is up!
+220413-09:46:16 [INFO] -- PollAck: BarcodeReaderDriver is up!
+220413-09:46:22 [INFO] -- Poll: TimesUp 93749 0
+220413-09:46:22 [INFO] -- PollAck: BarcodeReaderDriver is up!
+220413-09:46:22 [INFO] -- PollAck: TouchDisplayHandler is up!
+220413-09:46:22 [INFO] -- PollAck: SLSvrHandler is up!
+220413-09:46:22 [INFO] -- PollAck: OctopusCardReaderDriver is up!
+220413-09:46:22 [INFO] -- PollAck: LockerDriver is up!
