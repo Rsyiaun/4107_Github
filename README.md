@@ -70,3 +70,16 @@
     * SLCStarter.java <br>
 * SLCStarter.iml <br>
 * .gitignore <br>
+
+## 2. Install, run and test <br>
+* Download <br>
+For our group project, first download from github or open the project through url on IntelliJ. <br>
+URL: (https://github.com/Rsyiaun/4107_Github.git) <br>
+* Copy <br>
+After download the package, first please make a copy for the zip file of our project. <br>
+Please copy the config file before testing and running. <br>
+Then you can use the copy file to test the project. <br>
+* Run and test <br>
+Try to run or test our program on IntelliJ through right click SLCEmulatorStarter.java file and choose Run in the right click menu. <br> 
+* Get the actual result. <br>
+Get the run or test result and take screen shots. <br>
